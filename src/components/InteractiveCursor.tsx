@@ -91,19 +91,6 @@ const InteractiveCursor = () => {
         }}
         aria-hidden="true"
       />
-      {/* Soft golden glow */}
-      <div
-        ref={glowRef}
-        className="fixed top-0 left-0 pointer-events-none z-[99998] rounded-full"
-        style={{
-          width: 28,
-          height: 28,
-          background: "radial-gradient(circle, rgba(218,175,100,0.3) 0%, rgba(180,130,60,0.1) 50%, transparent 70%)",
-          transition: "width 0.3s ease, height 0.3s ease, opacity 0.3s ease",
-          willChange: "transform",
-        }}
-        aria-hidden="true"
-      />
     </>
   );
 };

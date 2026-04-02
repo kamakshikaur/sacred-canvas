@@ -28,10 +28,6 @@ const Index = () => {
   // Keep the eye solid until we are completely inside the pupil, then fade it out
   const eyeOpacity = useTransform(scrollYProgress, [0.4, 0.5], [1, 0]);
   
-  // Inner painting emerges out of the pupil's darkness
-  const innerPaintingOpacity = useTransform(scrollYProgress, [0.35, 0.5], [0, 0.4]);
-  const innerPaintingScale = useTransform(scrollYProgress, [0.35, 1], [0.8, 1.05]);
-  
   // Rolling eye: It elegantly rotates as you step inside
   const eyeRotate = useTransform(scrollYProgress, [0, 0.45], [0, 90]);
   
@@ -40,11 +36,9 @@ const Index = () => {
   const titleBlur = useTransform(scrollYProgress, [0, 0.1], ["blur(0px)", "blur(20px)"]);
   const scrollHintOpacity = useTransform(scrollYProgress, [0, 0.05], [0.4, 0]);
 
-  // Content emerges perfectly timed as the eye fades out from the zoom
-  // It completes fading in by 0.55. Since the div is 400vh, 0.55 to 1.0 is pure scrolling
-  // where the content rests clearly in the middle, creating a profound artistic pause!
-  const contentOpacity = useTransform(scrollYProgress, [0.4, 0.55], [0, 1]);
-  const contentScale = useTransform(scrollYProgress, [0.4, 0.55], [0.92, 1]);
+  // Content emerges perfectly timed as we step into the darkness
+  const contentOpacity = useTransform(scrollYProgress, [0.45, 0.6], [0, 1]);
+  const contentScale = useTransform(scrollYProgress, [0.45, 0.6], [0.95, 1]);
 
   return (
     <PageTransition>
@@ -84,25 +78,15 @@ const Index = () => {
             </motion.h1>
           </motion.div>
 
-          {/* Emerging painting from the soul */}
-          <motion.div
-            className="absolute inset-0 flex flex-col items-center justify-center z-[15] pointer-events-none"
-            style={{ opacity: innerPaintingOpacity, scale: innerPaintingScale }}
-          >
-            <ProtectedImage
-              src={featured[0].image}
-              alt={`${featured[0].title} emerging`}
-              className="w-full h-[70vh] object-cover mix-blend-lighten max-w-lg blur-[2px]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background opacity-80" />
-          </motion.div>
-
           {/* Content that emerges FROM the darkness inside the eye */}
           <motion.div
             className="absolute inset-0 flex flex-col items-center justify-center z-20"
             style={{ opacity: contentOpacity, scale: contentScale }}
           >
-            <p className="font-heading text-2xl md:text-4xl leading-relaxed italic text-foreground/80 text-center max-w-3xl px-8 mb-12">
+            <p 
+              className="font-heading text-3xl md:text-5xl leading-relaxed italic text-foreground tracking-wide text-center max-w-4xl px-8 mb-16 drop-shadow-md"
+              style={{ textShadow: "0px 4px 30px rgba(255, 255, 255, 0.15)" }}
+            >
               "What is created completes within you."
             </p>
             <MagneticButton>

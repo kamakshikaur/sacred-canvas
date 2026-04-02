@@ -3,12 +3,12 @@ import artwork2 from "@/assets/artwork-2.png";
 import artwork3 from "@/assets/artwork-3.png";
 import artwork4 from "@/assets/artwork-4.png";
 import artwork5 from "@/assets/artwork-5.png";
-import artwork6 from "@/assets/artwork-6.png";
+import artwork6 from "@/assets/correct.png";
 import artwork7 from "@/assets/artwork-7.png";
 import artwork8 from "@/assets/artwork-8.png";
 import artwork9 from "@/assets/artwork-9.png";
 import artwork10 from "@/assets/artwork-10.png";
-import artwork11 from "@/assets/artwork-11.png";
+
 
 import voiceoverFractionsOfSoul from "@/assets/voiceover-fractions-of-soul.m4a";
 import voiceoverConclave from "@/assets/voiceover-conclave.m4a";

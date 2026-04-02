@@ -8,7 +8,6 @@ import { SoundProvider } from "@/context/SoundContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
-import GrainOverlay from "@/components/GrainOverlay";
 import InteractiveCursor from "@/components/InteractiveCursor";
 import LiquidBackground from "@/components/LiquidBackground";
 import VoiceoverPlayer from "@/components/VoiceoverPlayer";
@@ -30,7 +29,6 @@ const App = () => (
         <BrowserRouter>
           <ScrollToTop />
           <LiquidBackground />
-          <GrainOverlay />
           <InteractiveCursor />
           <VoiceoverPlayer />
           <Navigation />
