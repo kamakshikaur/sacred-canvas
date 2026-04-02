@@ -24,8 +24,12 @@ const Index = () => {
   // Keep the eye solid until we are completely inside the pupil, then fade it out
   const eyeOpacity = useTransform(scrollYProgress, [0.85, 0.95], [1, 0]);
   
+  // Rolling eye: It elegantly rotates as you step inside
+  const eyeRotate = useTransform(scrollYProgress, [0, 0.8], [0, 90]);
+  
   const titleOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
-  const titleY = useTransform(scrollYProgress, [0, 0.15], [0, -40]);
+  const titleY = useTransform(scrollYProgress, [0, 0.15], [0, -50]);
+  const titleBlur = useTransform(scrollYProgress, [0, 0.12], ["blur(0px)", "blur(20px)"]);
   const scrollHintOpacity = useTransform(scrollYProgress, [0, 0.06], [0.4, 0]);
 
   // Content emerges perfectly timed as the eye fades out from the zoom
@@ -40,27 +44,33 @@ const Index = () => {
           {/* The Eye — zooms into the pupil, gently floating when idle */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center will-change-transform"
-            style={{ scale: eyeScale, opacity: eyeOpacity }}
-            animate={{ y: [0, -15, 0] }}
+            style={{ scale: eyeScale, opacity: eyeOpacity, rotate: eyeRotate }}
+            animate={{ 
+              y: [0, -15, 0],
+              rotateZ: [0, 2, -2, 0] // subtle breathing rotation
+            }}
             transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
           >
             <ProtectedImage
               src={heroEye}
               alt="Ornate golden eye — enter the art space of Kamakshi Kaur"
-              className="w-[55vmin] h-[55vmin] object-cover rounded-full shadow-[0_0_80px_rgba(103,0,17,0.3)]"
+              className="w-[55vmin] h-[55vmin] object-cover rounded-full shadow-[0_0_100px_rgba(103,0,17,0.4)]"
             />
           </motion.div>
 
           {/* Title — "Step Inside" */}
           <motion.div
-            className="absolute inset-0 flex flex-col items-center justify-center z-10"
-            style={{ opacity: titleOpacity, y: titleY }}
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 8, ease: "easeInOut", repeat: Infinity, delay: 1 }}
+            className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none"
+            style={{ opacity: titleOpacity, y: titleY, filter: titleBlur }}
           >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl tracking-[0.08em] font-heading text-secondary opacity-90 drop-shadow-2xl">
+            <motion.h1 
+              initial={{ letterSpacing: "0.05em", filter: "blur(15px)", opacity: 0, scale: 0.95 }}
+              animate={{ letterSpacing: "0.2em", filter: "blur(0px)", opacity: 0.95, scale: 1 }}
+              transition={{ duration: 3, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
+              className="text-5xl md:text-7xl lg:text-8xl font-heading text-secondary drop-shadow-2xl uppercase"
+            >
               Step Inside
-            </h1>
+            </motion.h1>
           </motion.div>
 
           {/* Content that emerges FROM the darkness inside the eye */}

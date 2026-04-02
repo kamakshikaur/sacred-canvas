@@ -20,16 +20,25 @@ interface SoundContextType {
 const SoundContext = createContext<SoundContextType | undefined>(undefined);
 
 export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isMuted, setIsMuted] = useState(true);
+  // We want the ambient music to play by default (unmuted).
+  const [isMuted, setIsMuted] = useState(false);
   const [activeVoiceover, setActiveVoiceover] = useState<string | null>(null);
   const [isVoiceoverPlaying, setIsVoiceoverPlaying] = useState(false);
+  
   const [voiceoverTime, setVoiceoverTime] = useState(0);
   const [voiceoverDuration, setVoiceoverDuration] = useState(0);
   
   const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
   const voiceoverAudioRef = useRef<HTMLAudioElement | null>(null);
+  const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const animationFrameRef = useRef<number>();
 
+  // --- AMBIENT VOLUME CONSTANTS ---
+  const NORMAL_VOL = 0.08; 
+  const DUCKED_VOL = 0.01;
+  const FADE_STEP = 0.005;
+
+  // Track time
   useEffect(() => {
     const updateTime = () => {
       if (voiceoverAudioRef.current && isVoiceoverPlaying) {
@@ -48,65 +57,126 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [isVoiceoverPlaying]);
 
-  useEffect(() => {
-    ambientAudioRef.current = new Audio(ambientMusicUrl);
-    ambientAudioRef.current.loop = true;
-    ambientAudioRef.current.volume = 0.2;
+  // Handle cross-fading ambient music smoothly
+  const fadeAmbientTo = (targetVolume: number) => {
+    if (!ambientAudioRef.current || isMuted) return;
     
+    if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+    
+    fadeIntervalRef.current = setInterval(() => {
+      if (!ambientAudioRef.current) return;
+      
+      const current = ambientAudioRef.current.volume;
+      if (Math.abs(current - targetVolume) < FADE_STEP) {
+        ambientAudioRef.current.volume = targetVolume;
+        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+      } else {
+        if (current < targetVolume) {
+          ambientAudioRef.current.volume = Math.min(current + FADE_STEP, targetVolume);
+        } else {
+          ambientAudioRef.current.volume = Math.max(current - FADE_STEP, targetVolume);
+        }
+      }
+    }, 50); // Small interval for smooth fade
+  };
+
+  // Mount logic - setup ambient auto-play
+  useEffect(() => {
+    const ambient = new Audio(ambientMusicUrl);
+    ambient.loop = true;
+    ambient.volume = NORMAL_VOL;
+    ambientAudioRef.current = ambient;
+    
+    const tryAutoplay = () => {
+      if (!isMuted && ambientAudioRef.current) {
+        ambientAudioRef.current.play().catch((e) => {
+          // Browser autoplay policy blocked it; we just wait for the user to interact
+          console.log("Autoplay blocked, waiting for interaction", e);
+        });
+      }
+    };
+
+    tryAutoplay();
+
+    // Attach to first interaction to bypass autoplay restrictions if needed
+    const unlockAudio = () => {
+      if (!isMuted && ambientAudioRef.current && ambientAudioRef.current.paused) {
+        ambientAudioRef.current.play().catch(() => {});
+      }
+      document.removeEventListener('click', unlockAudio);
+      document.removeEventListener('touchstart', unlockAudio);
+    };
+
+    document.addEventListener('click', unlockAudio);
+    document.addEventListener('touchstart', unlockAudio);
+
     return () => {
+      document.removeEventListener('click', unlockAudio);
+      document.removeEventListener('touchstart', unlockAudio);
       ambientAudioRef.current?.pause();
       voiceoverAudioRef.current?.pause();
+      if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
     };
   }, []);
 
+  // Handle Global Mute Toggling
   useEffect(() => {
-    if (ambientAudioRef.current) ambientAudioRef.current.muted = isMuted;
-    if (voiceoverAudioRef.current) voiceoverAudioRef.current.muted = isMuted;
-
-    if (isMuted) {
-      // Muting logic is strictly handled by updating the hardware mute parameter above
-    } else {
-      if (!isVoiceoverPlaying) {
-        ambientAudioRef.current?.play().catch(() => setIsMuted(true));
+    if (ambientAudioRef.current) {
+      if (isMuted) {
+        ambientAudioRef.current.pause();
       } else {
-        voiceoverAudioRef.current?.play().catch(() => setIsVoiceoverPlaying(false));
+        // If unmuted, play ambient but respect ducking if voiceover is playing
+        ambientAudioRef.current.volume = isVoiceoverPlaying ? DUCKED_VOL : NORMAL_VOL;
+        ambientAudioRef.current.play().catch(() => {});
       }
     }
-  }, [isMuted, isVoiceoverPlaying]);
 
-  const handleAmbientDucking = (shouldDuck: boolean) => {
-    if (shouldDuck) {
-      ambientAudioRef.current?.pause();
-    } else {
-      if (!isMuted) {
-        ambientAudioRef.current?.play().catch(console.error);
+    if (voiceoverAudioRef.current) {
+      if (isMuted) {
+        voiceoverAudioRef.current.pause();
+        setIsVoiceoverPlaying(false);
+      } else {
+        // We do NOT auto-resume voiceover if unmuted because it's abrupt, but the user requested `simple` controls. 
+        // We will just let the user click play again. Or we can auto-continue it.
       }
     }
-  };
+  }, [isMuted]);
+
+  // Handle ducking reactively based on Voiceover Playing state
+  useEffect(() => {
+    if (isVoiceoverPlaying && !isMuted) {
+      fadeAmbientTo(DUCKED_VOL);
+    } else if (!isVoiceoverPlaying && !isMuted) {
+      fadeAmbientTo(NORMAL_VOL);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isVoiceoverPlaying, isMuted]);
 
   const playVoiceover = (src: string) => {
-    if (isMuted) {
-      setIsMuted(false);
-    }
-
+    // If the same voice is paused, just resume
     if (activeVoiceover === src && voiceoverAudioRef.current) {
        resumeVoiceover();
        return;
     }
 
+    // Clean up previous audio instance
     if (voiceoverAudioRef.current) {
       voiceoverAudioRef.current.pause();
+      voiceoverAudioRef.current.src = "";
     }
     
+    // Create new audio
     setActiveVoiceover(src);
     setVoiceoverTime(0);
 
     const audio = new Audio(src);
     voiceoverAudioRef.current = audio;
-    audio.volume = 0.8;
-    audio.muted = false; // Ensure it plays unmuted
-
-    handleAmbientDucking(true);
+    audio.volume = 0.9;
+    
+    // Auto-unmute globally if they explicitly play a voiceover while muted
+    if (isMuted) {
+      setIsMuted(false);
+    }
     
     audio.play().then(() => {
       setIsVoiceoverPlaying(true);
@@ -115,22 +185,18 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
     
     audio.onended = () => {
       setIsVoiceoverPlaying(false);
-      setActiveVoiceover(null);
-      handleAmbientDucking(false);
+      setActiveVoiceover(null); // Clear active so the UI goes away
     };
   };
 
   const pauseVoiceover = () => {
     voiceoverAudioRef.current?.pause();
     setIsVoiceoverPlaying(false);
-    handleAmbientDucking(false); 
   };
 
   const resumeVoiceover = () => {
     if (voiceoverAudioRef.current) {
       if (isMuted) setIsMuted(false);
-      handleAmbientDucking(true);
-      voiceoverAudioRef.current.muted = false;
       voiceoverAudioRef.current.play().then(() => {
         setIsVoiceoverPlaying(true);
       }).catch(console.error);
@@ -140,15 +206,14 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
   const stopVoiceover = () => {
     if (voiceoverAudioRef.current) {
       voiceoverAudioRef.current.pause();
-      voiceoverAudioRef.current.currentTime = 0;
+      voiceoverAudioRef.current.src = ""; // Flush buffer
     }
     setIsVoiceoverPlaying(false);
     setActiveVoiceover(null);
     setVoiceoverTime(0);
-    handleAmbientDucking(false);
   };
 
-  const toggleMute = () => setIsMuted(!isMuted);
+  const toggleMute = () => setIsMuted(prev => !prev);
 
   return (
     <SoundContext.Provider value={{

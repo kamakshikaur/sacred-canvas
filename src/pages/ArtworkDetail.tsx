@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import FadeInView from "@/components/FadeInView";
 import ArtworkGallery from "@/components/ArtworkGallery";
-import VoiceoverPlayer from "@/components/VoiceoverPlayer";
+import { useSound } from "@/context/SoundContext";
 import ProtectedImage from "@/components/ProtectedImage";
 import { artworks } from "@/data/artworks";
 
@@ -19,6 +19,17 @@ const ArtworkDetail = () => {
     }
     return () => { document.title = "Kamakshi Kaur"; };
   }, [artwork]);
+
+  const { playVoiceover, stopVoiceover } = useSound();
+
+  useEffect(() => {
+    if (artwork?.voiceover) {
+      playVoiceover(artwork.voiceover);
+    }
+    return () => {
+      stopVoiceover();
+    };
+  }, [artwork?.voiceover, playVoiceover, stopVoiceover]);
 
   if (!artwork) {
     return (
@@ -42,9 +53,6 @@ const ArtworkDetail = () => {
 
   return (
     <PageTransition>
-      {/* Voiceover */}
-      <VoiceoverPlayer src={artwork.voiceover} />
-
       {/* Gallery modal */}
       <ArtworkGallery
         images={artwork.images}

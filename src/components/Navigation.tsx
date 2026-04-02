@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { useSound } from "@/context/SoundContext";
-import { Volume2, VolumeX } from "lucide-react";
+import { useTheme } from "next-themes";
+import { Moon, Sun } from "lucide-react";
 import MagneticButton from "@/components/MagneticButton";
 
 const navLinks = [
@@ -15,7 +15,7 @@ const navLinks = [
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { isMuted, toggleMute } = useSound();
+  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -57,11 +57,11 @@ const Navigation = () => {
               <div className="flex items-center gap-4">
                 <MagneticButton pull={40}>
                   <button
-                    onClick={toggleMute}
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                     className="text-foreground/70 hover:text-foreground slow-transition"
-                    aria-label="Toggle ambient sound"
+                    aria-label="Toggle dual mode"
                   >
-                    {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                    {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                   </button>
                 </MagneticButton>
               </div>

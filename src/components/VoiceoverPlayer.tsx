@@ -1,10 +1,6 @@
 import { Play, Pause, VolumeX, Volume2 } from "lucide-react";
 import { useSound } from "@/context/SoundContext";
 
-interface VoiceoverPlayerProps {
-  src?: string;
-}
-
 const formatTime = (time: number) => {
   if (isNaN(time) || !isFinite(time)) return "0:00";
   const minutes = Math.floor(time / 60);
@@ -12,57 +8,53 @@ const formatTime = (time: number) => {
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 };
 
-const VoiceoverPlayer = ({ src }: VoiceoverPlayerProps) => {
+const VoiceoverPlayer = () => {
   const { 
-    playVoiceover, pauseVoiceover, resumeVoiceover,
+    pauseVoiceover, resumeVoiceover,
     activeVoiceover, isVoiceoverPlaying, 
     voiceoverTime, voiceoverDuration,
     isMuted, toggleMute
   } = useSound();
 
-  if (!src) return null;
-
-  const isActive = activeVoiceover === src;
-  const isPlaying = isActive && isVoiceoverPlaying;
-
-  const togglePlayState = () => {
-    if (isActive) {
-      if (isPlaying) {
-        pauseVoiceover();
-      } else {
-        resumeVoiceover();
-      }
-    } else {
-      playVoiceover(src);
-    }
-  };
-
   return (
-    <div className="fixed bottom-8 right-8 md:bottom-12 md:right-12 z-[105] flex items-center gap-5 bg-background/70 backdrop-blur-xl px-6 py-3 md:px-8 md:py-4 rounded-full border border-foreground/10 shadow-2xl transition-all duration-500 hover:bg-background/90 hover:border-foreground/30">
-      <button 
-        onClick={togglePlayState}
-        className="flex items-center gap-3 md:gap-4 text-foreground/80 hover:text-foreground transition-colors duration-300 pointer-events-auto"
-        aria-label={isPlaying ? "Pause Artist Audio" : "Play Artist Audio"}
-      >
-        {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current" />}
-        <span className="text-xs md:text-sm font-heading tracking-[0.2em] uppercase">
-          {isPlaying ? "Pause" : "Listen to Artist"}
-        </span>
-      </button>
+    <div className="fixed bottom-8 right-8 md:bottom-12 md:right-12 z-[105] flex items-center gap-4 bg-background/70 backdrop-blur-xl px-5 py-3 md:px-6 md:py-4 rounded-full border border-foreground/10 shadow-2xl transition-all duration-500 hover:bg-background/90 hover:border-foreground/30">
+      
+      {/* Voiceover Controls (Only shown if an artwork is currently active) */}
+      {activeVoiceover && (
+        <div className="flex items-center gap-4 border-r border-foreground/10 pr-4">
+          <button 
+            onClick={isVoiceoverPlaying ? pauseVoiceover : resumeVoiceover}
+            className="flex items-center gap-3 text-foreground/80 hover:text-foreground transition-colors duration-300 pointer-events-auto"
+            aria-label={isVoiceoverPlaying ? "Pause Artist Audio" : "Play Artist Audio"}
+          >
+            {isVoiceoverPlaying ? <Pause className="w-4 h-4 md:w-5 md:h-5 fill-current" /> : <Play className="w-4 h-4 md:w-5 md:h-5 fill-current" />}
+            <span className="text-[10px] md:text-xs font-heading tracking-[0.2em] uppercase shrink-0">
+              {isVoiceoverPlaying ? "Pause Voice" : "Artist Voice"}
+            </span>
+          </button>
 
-      {(isActive && voiceoverDuration > 0) && (
-        <div className="text-xs md:text-sm font-mono tracking-widest text-foreground/60 w-20 md:w-24 text-center pointer-events-none select-none">
-          {formatTime(voiceoverTime)} / {formatTime(voiceoverDuration)}
+          {voiceoverDuration > 0 && (
+            <div className="text-[10px] md:text-xs font-mono tracking-wider text-foreground/60 w-16 md:w-20 text-center pointer-events-none select-none">
+              {formatTime(voiceoverTime)} / {formatTime(voiceoverDuration)}
+            </div>
+          )}
         </div>
       )}
 
+      {/* Global Mute Toggle (Always shown) */}
       <button
         onClick={toggleMute}
-        className="text-foreground/60 hover:text-foreground transition-colors duration-300 pointer-events-auto ml-2 md:ml-4"
-        aria-label={isMuted ? "Unmute" : "Mute"}
+        className="flex items-center gap-3 text-foreground/80 hover:text-foreground transition-colors duration-300 pointer-events-auto pl-1"
+        aria-label={isMuted ? "Unmute Ambient" : "Mute Ambient"}
       >
-        {isMuted ? <VolumeX className="w-5 h-5 md:w-6 md:h-6" /> : <Volume2 className="w-5 h-5 md:w-6 md:h-6" />}
+        {isMuted ? <VolumeX className="w-4 h-4 md:w-5 md:h-5" /> : <Volume2 className="w-4 h-4 md:w-5 md:h-5" />}
+        {!activeVoiceover && (
+          <span className="text-[10px] md:text-xs font-heading tracking-[0.2em] uppercase">
+            {isMuted ? "Unmuted" : "Mute"}
+          </span>
+        )}
       </button>
+
     </div>
   );
 };

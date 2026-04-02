@@ -11,6 +11,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import GrainOverlay from "@/components/GrainOverlay";
 import InteractiveCursor from "@/components/InteractiveCursor";
 import LiquidBackground from "@/components/LiquidBackground";
+import VoiceoverPlayer from "@/components/VoiceoverPlayer";
 import Index from "./pages/Index";
 import Works from "./pages/Works";
 import ArtworkDetail from "./pages/ArtworkDetail";
@@ -31,6 +32,7 @@ const App = () => (
           <LiquidBackground />
           <GrainOverlay />
           <InteractiveCursor />
+          <VoiceoverPlayer />
           <Navigation />
           <div className="pb-16">
             <Routes>
