@@ -109,8 +109,9 @@ const Index = () => {
                   <TiltCard intensity={12}>
                     <div className="relative">
                       <div
-                        className="absolute -inset-6 rounded-[50%] opacity-0 group-hover:opacity-100 transition-opacity duration-[1.2s] ease-out -z-10"
+                        className="absolute -inset-6 rounded-[50%] opacity-0 group-hover:opacity-100 transition-opacity ease-out -z-10"
                         style={{
+                          transitionDuration: "1.2s",
                           background: "radial-gradient(ellipse at center, rgba(103,0,17,0.45) 0%, rgba(103,0,17,0.15) 40%, transparent 70%)",
                         }}
                       />

@@ -91,7 +91,8 @@ const ArtworkDetail = () => {
           <ProtectedImage
             src={artwork.image}
             alt={artwork.title}
-            className="relative max-h-[70vh] w-auto object-contain hover:scale-[1.01] transition-transform duration-[1.6s] ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+            className="relative max-h-[70vh] w-auto object-contain hover:scale-[1.01] transition-transform"
+            style={{ transitionDuration: "1.6s", transitionTimingFunction: "cubic-bezier(0.25,0.1,0.25,1)" }}
           />
         </motion.div>
 
