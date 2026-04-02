@@ -110,8 +110,8 @@ const ArtworkDetail = () => {
               </h1>
               {artwork.pronunciation && (
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-secondary/60 text-xs">◆</span>
-                  <span className="font-mono text-[13px] tracking-[0.2em] text-primary/60 lowercase italic">
+                  <span className="text-secondary/80 text-xs">◆</span>
+                  <span className="font-mono text-[13px] tracking-[0.2em] text-secondary/90 lowercase italic">
                     [ {artwork.pronunciation} ]
                   </span>
                 </div>

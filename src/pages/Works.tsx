@@ -5,7 +5,7 @@ import FadeInView from "@/components/FadeInView";
 import ProtectedImage from "@/components/ProtectedImage";
 import TiltCard from "@/components/TiltCard";
 import { artworks } from "@/data/artworks";
-import portfolioCover from "@/assets/portfolio-cover.jpg";
+import portfolioCover from "@/assets/portfolio-cover.png";
 
 const gridItems = [
   { colSpan: "md:col-span-7", colStart: "md:col-start-1", featured: true },

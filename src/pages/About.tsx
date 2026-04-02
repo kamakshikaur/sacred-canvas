@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import FadeInView from "@/components/FadeInView";
 import ProtectedImage from "@/components/ProtectedImage";
-import artistPortrait from "@/assets/artist-portrait.jpg";
+import artistPortrait from "@/assets/artist-portrait.png";
 
 const About = () => {
   useEffect(() => { document.title = "About — Kamakshi Kaur"; return () => { document.title = "Kamakshi Kaur"; }; }, []);

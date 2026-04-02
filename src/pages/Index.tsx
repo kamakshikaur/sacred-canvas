@@ -6,7 +6,7 @@ import FadeInView from "@/components/FadeInView";
 import ProtectedImage from "@/components/ProtectedImage";
 import TiltCard from "@/components/TiltCard";
 import MagneticButton from "@/components/MagneticButton";
-import heroEye from "@/assets/hero-eye.jpg";
+import heroEye from "@/assets/hero-eye.png";
 import { artworks } from "@/data/artworks";
 
 const Index = () => {
