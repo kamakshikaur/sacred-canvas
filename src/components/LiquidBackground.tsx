@@ -1,43 +1,44 @@
 import { useEffect, useRef } from "react";
 
 /**
- * LiquidBackground — Updated to use the portfolio PDF cover as the background.
- * Uses a fixed background with overlays to preserve atmosphere and text readability.
- * The atmospheric wash now slightly follows the user's mouse for a dynamic feel.
+ * LiquidBackground — Dynamic copper/crimson environment that breathes with the cursor.
+ * Uses high-performance CSS gradients and an inline SVG noise texture for a metallic canvas feel.
  */
 const LiquidBackground = () => {
-  const washRef = useRef<HTMLDivElement>(null);
-  
+  const bgRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    // Mouse tracking for dynamic lighting
-    let mouseX = 0;
-    let mouseY = 0;
-    let currentX = 0;
-    let currentY = 0;
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let currentX = mouseX;
+    let currentY = mouseY;
     let animationFrameId: number;
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Normalize mouse coordinates precisely from -1.0 to 1.0 based on screen center
-      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     const animate = () => {
-      // Smooth interpolation for the lighting shift
+      // Smooth interpolation for the light
       currentX += (mouseX - currentX) * 0.05;
       currentY += (mouseY - currentY) * 0.05;
 
-      if (washRef.current) {
-        // Shift light centers by up to 15% based on mouse position
-        const xOffset = currentX * 15;
-        const yOffset = currentY * 15;
+      if (bgRef.current) {
+        // Convert to percentages for gradient positioning
+        const xPercent = (currentX / window.innerWidth) * 100;
+        const yPercent = (currentY / window.innerHeight) * 100;
 
-        washRef.current.style.background = `
-          radial-gradient(ellipse at ${20 + xOffset}% ${20 + yOffset}%, hsla(350, 100%, 12%, 0.4) 0%, transparent 70%),
-          radial-gradient(ellipse at ${80 - xOffset}% ${70 - yOffset}%, hsla(20, 80%, 15%, 0.3) 0%, transparent 60%),
-          linear-gradient(to bottom, transparent, hsla(350, 40%, 5%, 0.8))
+        // Dynamic gradient:
+        // 1. A copper/gold highlight that closely follows the mouse
+        // 2. A subtle deep crimson shift taking the opposite direction
+        // 3. A dark, rich base color
+        bgRef.current.style.background = `
+          radial-gradient(circle at ${xPercent}% ${yPercent}%, hsla(25, 45%, 15%, 0.8) 0%, transparent 40%),
+          radial-gradient(ellipse at ${100 - xPercent * 0.3}% ${100 - yPercent * 0.3}%, hsla(350, 80%, 10%, 0.9) 0%, transparent 60%),
+          radial-gradient(ellipse at 50% 50%, hsla(20, 20%, 5%, 1) 0%, hsla(0, 0%, 2%, 1) 100%)
         `;
       }
       animationFrameId = requestAnimationFrame(animate);
@@ -52,30 +53,24 @@ const LiquidBackground = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 -z-10 bg-background overflow-hidden pointer-events-none" aria-hidden="true">
-      {/* Target background image from the PDF */}
+    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-[#0a0505]" aria-hidden="true">
+      {/* Background gradients layer */}
       <div 
-        className="absolute inset-0 opacity-80 transition-transform duration-1000 ease-out scale-105"
-        style={{
-          backgroundImage: 'url("/assets/portfolio-bg.png")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-        }}
-      />
-      {/* Protective overlay to ensure typography remains legible over the image */}
-      <div className="absolute inset-0 bg-background/50 backdrop-blur-[2px]" />
-      
-      {/* Deep red/amber atmosphere wash matching the PDF colors */}
-      <div
-        ref={washRef}
-        className="absolute inset-0 mix-blend-multiply"
+        ref={bgRef}
+        className="absolute inset-0 transition-opacity duration-1000"
         style={{
           background: `
-            radial-gradient(ellipse at 20% 20%, hsla(350, 100%, 12%, 0.4) 0%, transparent 70%),
-            radial-gradient(ellipse at 80% 70%, hsla(20, 80%, 15%, 0.3) 0%, transparent 60%),
-            linear-gradient(to bottom, transparent, hsla(350, 40%, 5%, 0.8))
-          `,
+            radial-gradient(circle at 50% 50%, hsla(25, 45%, 15%, 0.8) 0%, transparent 40%),
+            radial-gradient(ellipse at 80% 80%, hsla(350, 80%, 10%, 0.9) 0%, transparent 60%),
+            radial-gradient(ellipse at 50% 50%, hsla(20, 20%, 5%, 1) 0%, hsla(0, 0%, 2%, 1) 100%)
+          `
+        }}
+      />
+      {/* SVG Noise filter to give the background a physical canvas/metallic texture */}
+      <div 
+        className="absolute inset-0 mix-blend-overlay opacity-30"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
       />
     </div>
