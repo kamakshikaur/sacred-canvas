@@ -64,11 +64,11 @@ const Works = () => {
                       loading="lazy"
                     />
                   </div>
-                  <div className="mt-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                    <h3 className="font-heading text-lg text-foreground/80 group-hover:italic transition-all duration-500">
+                  <div className="mt-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 antialiased">
+                    <h3 className="font-heading text-xl font-medium tracking-wide text-secondary/95 group-hover:italic transition-all duration-500">
                       {work.title}
                     </h3>
-                    <p className="font-body text-sm text-foreground/60 mt-1">
+                    <p className="font-body text-sm font-medium tracking-wide text-foreground/85 mt-1.5">
                       {work.medium}
                     </p>
                   </div>

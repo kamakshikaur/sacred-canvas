@@ -39,6 +39,22 @@ export interface Artwork {
 
 export const artworks: Artwork[] = [
   {
+    id: "sunn",
+    title: "Sunn",
+    nativeTitle: "ਸੁੰਨ",
+    pronunciation: "sun",
+    year: "2024",
+    medium: "Charcoal and pigment on cotton",
+    dimensions: "137 × 107 cm",
+    image: artwork6,
+    images: [artwork6],
+    description:
+      "A figure emerges from the grain of the paper itself, as though the medium remembered a body it once held. The lines are not drawn so much as discovered — traces of movement left behind like footprints in sand before the tide returns.",
+    meaning:
+      "The body is the first landscape we ever know. This work explores the boundary between self and surface, between the person we present and the one who exists beneath. The whisper is not the figure itself, but the space around it — the silence that gives the form its voice.",
+    voiceover: voiceoverSunn,
+  },
+  {
     id: "fractions-of-soul",
     title: "Fractions of Soul",
     year: "2024",
@@ -114,22 +130,7 @@ export const artworks: Artwork[] = [
       "We are most beautiful at our seams. This work honors the cracks we carry, the breaks that let the light enter. The gold is not a fix — it is a celebration. It speaks to the radical idea that our damage is not something to hide but to illuminate, that our fractures are the very places where our humanity shines through.",
     voiceover: voiceoverKithe,
   },
-  {
-    id: "sunn",
-    title: "Sunn",
-    nativeTitle: "ਸੁੰਨ",
-    pronunciation: "sun",
-    year: "2024",
-    medium: "Charcoal and pigment on cotton",
-    dimensions: "137 × 107 cm",
-    image: artwork6,
-    images: [artwork6],
-    description:
-      "A figure emerges from the grain of the paper itself, as though the medium remembered a body it once held. The lines are not drawn so much as discovered — traces of movement left behind like footprints in sand before the tide returns.",
-    meaning:
-      "The body is the first landscape we ever know. This work explores the boundary between self and surface, between the person we present and the one who exists beneath. The whisper is not the figure itself, but the space around it — the silence that gives the form its voice.",
-    voiceover: voiceoverSunn,
-  },
+
   {
     id: "vichhora",
     title: "Vichhora ",
@@ -190,18 +191,5 @@ export const artworks: Artwork[] = [
       "The tide is the earth's most faithful rhythm — relentless, patient, indifferent to our watching. This work mirrors the inner tides we all carry: the rising and falling of emotion, the pull of memory, the undertow of longing. It asks nothing of the viewer except presence.",
     voiceover: voiceoverBesotted,
   },
-  {
-    id: "divine-symmetry",
-    title: "Divine Symmetry",
-    year: "2024",
-    medium: "Copper, enamel and mixed media on wood panel",
-    dimensions: "198 × 122 cm",
-    image: artwork11,
-    images: [artwork11],
-    description:
-      "An ornamental threshold carved from darkness itself. Copper and crimson tendrils unfurl in perfect mirrored symmetry, yet each curve carries the tremor of a living hand. Eyes emerge from the pattern — watching, witnessing, blessing. This is not decoration; it is invocation. A doorway that sees you before you step through.",
-    meaning:
-      "This work draws from the ancient language of sacred geometry and temple adornment — the belief that symmetry is not repetition, but reverence. The central form is at once a face, a gateway, and a prayer. It asks: what do we guard with our most elaborate beauty? The answer is always the same — the vulnerable, the divine, the unnamed thing at our center that cannot be spoken, only surrounded with devotion.",
-    voiceover: voiceoverEmberAndGold,
-  },
+
 ];

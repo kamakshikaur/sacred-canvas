@@ -11,39 +11,45 @@ import { artworks } from "@/data/artworks";
 
 const Index = () => {
   useEffect(() => { document.title = "Kamakshi Kaur — Contemporary Artist | Oil & Gold Leaf Paintings"; return () => { document.title = "Kamakshi Kaur"; }; }, []);
-  const featured = [artworks[0], artworks[1], artworks[artworks.length - 1]];
+  const featured = [
+    artworks.find(w => w.id === "fractions-of-soul") || artworks[0],
+    artworks.find(w => w.id === "sunn") || artworks[1],
+    artworks.find(w => w.id === "conclave") || artworks[2],
+  ];
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
 
-  // Eye zooms in massively — user deeply enters the pupil so the screen is engulfed before the reveal
-  const eyeScale = useTransform(scrollYProgress, [0, 0.5, 0.8], [1, 4, 60]);
+  // Eye zooms in massively — finishes zooming earlier so we have space to linger
+  const eyeScale = useTransform(scrollYProgress, [0, 0.3, 0.45], [1, 4, 80]);
   
   // Keep the eye solid until we are completely inside the pupil, then fade it out
-  const eyeOpacity = useTransform(scrollYProgress, [0.85, 0.95], [1, 0]);
+  const eyeOpacity = useTransform(scrollYProgress, [0.4, 0.5], [1, 0]);
   
   // Inner painting emerges out of the pupil's darkness
-  const innerPaintingOpacity = useTransform(scrollYProgress, [0.75, 0.95], [0, 1]);
-  const innerPaintingScale = useTransform(scrollYProgress, [0.75, 1], [0.8, 1.05]);
+  const innerPaintingOpacity = useTransform(scrollYProgress, [0.35, 0.5], [0, 0.4]);
+  const innerPaintingScale = useTransform(scrollYProgress, [0.35, 1], [0.8, 1.05]);
   
   // Rolling eye: It elegantly rotates as you step inside
-  const eyeRotate = useTransform(scrollYProgress, [0, 0.8], [0, 90]);
+  const eyeRotate = useTransform(scrollYProgress, [0, 0.45], [0, 90]);
   
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
-  const titleY = useTransform(scrollYProgress, [0, 0.15], [0, -50]);
-  const titleBlur = useTransform(scrollYProgress, [0, 0.12], ["blur(0px)", "blur(20px)"]);
-  const scrollHintOpacity = useTransform(scrollYProgress, [0, 0.06], [0.4, 0]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+  const titleY = useTransform(scrollYProgress, [0, 0.12], [0, -50]);
+  const titleBlur = useTransform(scrollYProgress, [0, 0.1], ["blur(0px)", "blur(20px)"]);
+  const scrollHintOpacity = useTransform(scrollYProgress, [0, 0.05], [0.4, 0]);
 
   // Content emerges perfectly timed as the eye fades out from the zoom
-  const contentOpacity = useTransform(scrollYProgress, [0.75, 0.95], [0, 1]);
-  const contentScale = useTransform(scrollYProgress, [0.75, 0.95], [0.92, 1]);
+  // It completes fading in by 0.55. Since the div is 400vh, 0.55 to 1.0 is pure scrolling
+  // where the content rests clearly in the middle, creating a profound artistic pause!
+  const contentOpacity = useTransform(scrollYProgress, [0.4, 0.55], [0, 1]);
+  const contentScale = useTransform(scrollYProgress, [0.4, 0.55], [0.92, 1]);
 
   return (
     <PageTransition>
       {/* Eye-zoom hero — scroll INTO the eye, content reveals from within */}
-      <div ref={heroRef} className="relative h-[300vh]">
+      <div ref={heroRef} className="relative h-[400vh]">
         <div className="sticky top-0 h-screen overflow-hidden">
           {/* The Eye — zooms into the pupil, gently floating when idle */}
           <motion.div
@@ -80,13 +86,13 @@ const Index = () => {
 
           {/* Emerging painting from the soul */}
           <motion.div
-            className="absolute inset-0 flex flex-col items-center justify-center z-15 pointer-events-none"
+            className="absolute inset-0 flex flex-col items-center justify-center z-[15] pointer-events-none"
             style={{ opacity: innerPaintingOpacity, scale: innerPaintingScale }}
           >
             <ProtectedImage
-              src={artworks[0].image}
-              alt="Fractions of Soul emerging"
-              className="w-full h-[70vh] object-cover mix-blend-lighten max-w-lg opacity-40 blur-[2px]"
+              src={featured[0].image}
+              alt={`${featured[0].title} emerging`}
+              className="w-full h-[70vh] object-cover mix-blend-lighten max-w-lg blur-[2px]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background opacity-80" />
           </motion.div>
@@ -149,8 +155,8 @@ const Index = () => {
                       loading="lazy"
                     />
                   </div>
-                  <div className="mt-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                    <h3 className="font-heading text-lg text-foreground/80 group-hover:italic transition-all duration-500">
+                  <div className="mt-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 antialiased">
+                    <h3 className="font-heading text-xl font-medium tracking-wide text-secondary/95 group-hover:italic transition-all duration-500">
                       {work.title}
                     </h3>
                   </div>
