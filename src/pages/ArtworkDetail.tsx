@@ -30,7 +30,7 @@ const ArtworkDetail = () => {
             </h1>
             <Link
               to="/works"
-              className="font-body text-sm tracking-[0.2em] uppercase text-muted-foreground hover:text-primary slow-transition"
+              className="font-body text-sm tracking-[0.2em] uppercase text-muted-foreground hover:text-foreground slow-transition"
             >
               Return to Works
             </Link>

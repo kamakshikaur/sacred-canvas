@@ -64,7 +64,7 @@ const About = () => {
             </FadeInView>
 
             <FadeInView delay={0.6}>
-              <h2 className="font-heading text-xs tracking-[0.3em] uppercase text-primary/70 mb-6">
+              <h2 className="font-heading text-xs tracking-[0.3em] uppercase text-secondary/80 mb-6">
                 Philosophy
               </h2>
               <p className="font-body text-lg leading-relaxed text-foreground/60 mb-8">
@@ -77,7 +77,7 @@ const About = () => {
             </FadeInView>
 
             <FadeInView delay={0.75}>
-              <h2 className="font-heading text-xs tracking-[0.3em] uppercase text-primary/70 mb-6">
+              <h2 className="font-heading text-xs tracking-[0.3em] uppercase text-secondary/80 mb-6">
                 Why I Create
               </h2>
               <p className="font-body text-lg leading-relaxed text-foreground/60">
