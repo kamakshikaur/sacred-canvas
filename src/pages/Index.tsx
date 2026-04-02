@@ -133,30 +133,27 @@ const Index = () => {
             ];
             return (
               <FadeInView key={work.id} delay={i * 0.06} className={layouts[i]}>
-                <Link to={`/works/${work.id}`} className="block group artwork-item">
-                  <TiltCard intensity={12}>
-                    <div className="relative">
-                      <div
-                        className="absolute -inset-6 rounded-[50%] opacity-0 group-hover:opacity-100 transition-opacity ease-out -z-10"
-                        style={{
-                          transitionDuration: "1.2s",
-                          background: "radial-gradient(ellipse at center, rgba(103,0,17,0.45) 0%, rgba(103,0,17,0.15) 40%, transparent 70%)",
-                        }}
-                      />
-                      <ProtectedImage
-                        src={work.image}
-                        alt={work.title}
-                        className="relative w-full h-auto object-contain transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                        loading="lazy"
-                        style={{ transformStyle: "preserve-3d", transform: "translateZ(20px)" }}
-                      />
-                    </div>
-                    <div className="mt-4 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ transform: "translateZ(30px)" }}>
-                      <h3 className="font-heading text-lg text-foreground/80 group-hover:italic transition-all duration-500">
-                        {work.title}
-                      </h3>
-                    </div>
-                  </TiltCard>
+                <Link to={`/works/${work.id}`} className="block group artwork-item relative">
+                  <div className="relative isolate">
+                    <div
+                      className="absolute -inset-10 md:-inset-16 rounded-[50%] opacity-0 group-hover:opacity-100 transition-opacity ease-out -z-10"
+                      style={{
+                        transitionDuration: "1.2s",
+                        background: "radial-gradient(ellipse at center, rgba(163,0,27,0.4) 0%, rgba(103,0,17,0.15) 50%, transparent 70%)",
+                      }}
+                    />
+                    <ProtectedImage
+                      src={work.image}
+                      alt={work.title}
+                      className="relative w-full h-auto object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="mt-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <h3 className="font-heading text-lg text-foreground/80 group-hover:italic transition-all duration-500">
+                      {work.title}
+                    </h3>
+                  </div>
                 </Link>
               </FadeInView>
             );

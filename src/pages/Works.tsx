@@ -45,36 +45,33 @@ const Works = () => {
                 delay={i * 0.05}
                 className={`${item.colSpan} ${item.colStart}`}
               >
-                <Link to={`/works/${work.id}`} className="block group">
-                  <TiltCard intensity={12}>
-                    <div className="relative">
-                      {/* Red glow — static gradient, only opacity transitions (zero filter cost) */}
-                      <div
-                        className="absolute -inset-6 rounded-[50%] opacity-0 group-hover:opacity-100 transition-opacity ease-out -z-10"
-                        style={{
-                          transitionDuration: "1.2s",
-                          background: "radial-gradient(ellipse at center, rgba(103,0,17,0.45) 0%, rgba(103,0,17,0.15) 40%, transparent 70%)",
-                        }}
-                      />
-                      <ProtectedImage
-                        src={work.image}
-                        alt={work.title}
-                        className={`w-full h-auto object-contain transition-transform group-hover:scale-[1.02] ${
-                          item.featured ? "max-h-[70vh]" : "max-h-[50vh]"
-                        }`}
-                        loading="lazy"
-                        style={{ transformStyle: "preserve-3d", transform: "translateZ(20px)", transitionDuration: "1.6s", transitionTimingFunction: "cubic-bezier(0.25,0.1,0.25,1)" }}
-                      />
-                      <div className="mt-5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" style={{ transform: "translateZ(30px)" }}>
-                        <h3 className="font-heading text-lg text-foreground/80">
-                          {work.title}
-                        </h3>
-                        <p className="font-body text-sm text-muted-foreground mt-0.5">
-                          {work.medium}
-                        </p>
-                      </div>
-                    </div>
-                  </TiltCard>
+                <Link to={`/works/${work.id}`} className="block group relative">
+                  <div className="relative isolate">
+                    {/* Red glow — static gradient, only opacity transitions (zero filter cost) */}
+                    <div
+                      className="absolute -inset-10 md:-inset-16 rounded-[50%] opacity-0 group-hover:opacity-100 transition-opacity ease-out -z-10"
+                      style={{
+                        transitionDuration: "1.2s",
+                        background: "radial-gradient(ellipse at center, rgba(163,0,27,0.4) 0%, rgba(103,0,17,0.15) 50%, transparent 70%)",
+                      }}
+                    />
+                    <ProtectedImage
+                      src={work.image}
+                      alt={work.title}
+                      className={`relative w-full h-auto object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03] ${
+                        item.featured ? "max-h-[70vh]" : "max-h-[50vh]"
+                      }`}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="mt-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <h3 className="font-heading text-lg text-foreground/80 group-hover:italic transition-all duration-500">
+                      {work.title}
+                    </h3>
+                    <p className="font-body text-sm text-foreground/60 mt-1">
+                      {work.medium}
+                    </p>
+                  </div>
                 </Link>
               </FadeInView>
             );
