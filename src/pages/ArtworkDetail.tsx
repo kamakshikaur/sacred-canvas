@@ -29,7 +29,8 @@ const ArtworkDetail = () => {
     return () => {
       stopVoiceover();
     };
-  }, [artwork?.voiceover, playVoiceover, stopVoiceover]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [artwork?.voiceover]);
 
   if (!artwork) {
     return (

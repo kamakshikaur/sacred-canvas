@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
+
 import MagneticButton from "@/components/MagneticButton";
 
 const navLinks = [
@@ -15,7 +14,7 @@ const navLinks = [
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { theme, setTheme } = useTheme();
+
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -52,20 +51,7 @@ const Navigation = () => {
               ))}
             </div>
 
-            {/* Controls */}
-            {mounted && (
-              <div className="flex items-center gap-4">
-                <MagneticButton pull={40}>
-                  <button
-                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                    className="text-foreground/70 hover:text-foreground slow-transition"
-                    aria-label="Toggle dual mode"
-                  >
-                    {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                  </button>
-                </MagneticButton>
-              </div>
-            )}
+
 
             {/* Mobile menu button */}
             <button

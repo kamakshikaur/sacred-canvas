@@ -24,6 +24,10 @@ const Index = () => {
   // Keep the eye solid until we are completely inside the pupil, then fade it out
   const eyeOpacity = useTransform(scrollYProgress, [0.85, 0.95], [1, 0]);
   
+  // Inner painting emerges out of the pupil's darkness
+  const innerPaintingOpacity = useTransform(scrollYProgress, [0.75, 0.95], [0, 1]);
+  const innerPaintingScale = useTransform(scrollYProgress, [0.75, 1], [0.8, 1.05]);
+  
   // Rolling eye: It elegantly rotates as you step inside
   const eyeRotate = useTransform(scrollYProgress, [0, 0.8], [0, 90]);
   
@@ -67,10 +71,24 @@ const Index = () => {
               initial={{ letterSpacing: "0.05em", filter: "blur(15px)", opacity: 0, scale: 0.95 }}
               animate={{ letterSpacing: "0.2em", filter: "blur(0px)", opacity: 0.95, scale: 1 }}
               transition={{ duration: 3, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-heading text-secondary drop-shadow-2xl uppercase"
+              className="text-5xl md:text-7xl lg:text-8xl font-heading text-secondary drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] uppercase"
+              style={{ textShadow: "0px 0px 40px rgba(255,160,100,0.6)" }}
             >
               Step Inside
             </motion.h1>
+          </motion.div>
+
+          {/* Emerging painting from the soul */}
+          <motion.div
+            className="absolute inset-0 flex flex-col items-center justify-center z-15 pointer-events-none"
+            style={{ opacity: innerPaintingOpacity, scale: innerPaintingScale }}
+          >
+            <ProtectedImage
+              src={artworks[0].image}
+              alt="Fractions of Soul emerging"
+              className="w-full h-[70vh] object-cover mix-blend-lighten max-w-lg opacity-40 blur-[2px]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background opacity-80" />
           </motion.div>
 
           {/* Content that emerges FROM the darkness inside the eye */}

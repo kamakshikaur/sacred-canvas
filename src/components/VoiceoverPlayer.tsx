@@ -50,7 +50,7 @@ const VoiceoverPlayer = () => {
         {isMuted ? <VolumeX className="w-4 h-4 md:w-5 md:h-5" /> : <Volume2 className="w-4 h-4 md:w-5 md:h-5" />}
         {!activeVoiceover && (
           <span className="text-[10px] md:text-xs font-heading tracking-[0.2em] uppercase">
-            {isMuted ? "Unmuted" : "Mute"}
+            {isMuted ? "Unmute" : "Mute"}
           </span>
         )}
       </button>

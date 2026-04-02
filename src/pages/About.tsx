@@ -64,10 +64,10 @@ const About = () => {
             </FadeInView>
 
             <FadeInView delay={0.6}>
-              <h2 className="font-heading text-base font-semibold tracking-[0.3em] uppercase text-accent mb-6">
+              <h2 className="font-heading text-xs tracking-[0.3em] uppercase text-secondary/90 mb-6 font-normal">
                 Philosophy
               </h2>
-              <p className="font-body text-xl leading-relaxed text-foreground/95 mb-8">
+              <p className="font-body text-lg leading-relaxed text-foreground/95 mb-8">
                 I believe art should not explain — it should resonate. Like a
                 half-remembered dream, a painting should leave you with a feeling
                 you can't quite name but recognize as deeply yours. My practice
@@ -77,10 +77,10 @@ const About = () => {
             </FadeInView>
 
             <FadeInView delay={0.75}>
-              <h2 className="font-heading text-base font-semibold tracking-[0.3em] uppercase text-accent mb-6">
+              <h2 className="font-heading text-xs tracking-[0.3em] uppercase text-secondary/90 mb-6 font-normal">
                 Why I Create
               </h2>
-              <p className="font-body text-xl leading-relaxed text-foreground/95">
+              <p className="font-body text-lg leading-relaxed text-foreground/95">
                 Because the body knows things the mind refuses. Because color can
                 hold grief and joy in the same breath. Because somewhere,
                 someone will stand before a canvas and feel less alone — and that
