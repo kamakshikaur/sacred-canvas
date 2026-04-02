@@ -22,9 +22,9 @@ const LiquidBackground = () => {
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     const animate = () => {
-      // Smooth interpolation for the light
-      currentX += (mouseX - currentX) * 0.05;
-      currentY += (mouseY - currentY) * 0.05;
+      // Smooth interpolation for the light (increased speed)
+      currentX += (mouseX - currentX) * 0.25;
+      currentY += (mouseY - currentY) * 0.25;
 
       if (bgRef.current) {
         // Convert to percentages for gradient positioning
@@ -64,13 +64,6 @@ const LiquidBackground = () => {
             radial-gradient(ellipse at 80% 80%, hsla(350, 80%, 10%, 0.9) 0%, transparent 60%),
             radial-gradient(ellipse at 50% 50%, hsla(20, 20%, 5%, 1) 0%, hsla(0, 0%, 2%, 1) 100%)
           `
-        }}
-      />
-      {/* SVG Noise filter to give the background a physical canvas/metallic texture */}
-      <div 
-        className="absolute inset-0 mix-blend-overlay opacity-30"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
       />
     </div>

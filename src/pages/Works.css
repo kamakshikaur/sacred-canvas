@@ -1,0 +1,452 @@
+/* ═══════════════════════════════════════════════════
+   WORKS PAGE — The "Rooms" Layout
+   ═══════════════════════════════════════════════════ */
+
+/* ── Hero Banner ── */
+.works-hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 2rem;
+  overflow: hidden;
+}
+
+.works-hero__content {
+  text-align: center;
+  max-width: 800px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.works-hero__line {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(to right, hsl(38 60% 50% / 0.5), transparent);
+  margin-bottom: 2rem;
+}
+
+.works-hero__title {
+  font-family: var(--font-heading);
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: hsl(43 45% 90% / 0.9);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.works-hero__quote {
+  font-family: var(--font-body);
+  font-size: clamp(1.2rem, 3vw, 1.7rem);
+  color: hsl(43 45% 90% / 0.7);
+  font-style: italic;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+.works-hero__count {
+  margin-top: 3rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: hsl(43 45% 90% / 0.4);
+}
+
+.works-hero__scroll {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.works-hero__scroll-line {
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, hsl(38 100% 84% / 0.4), transparent);
+  animation: scroll-pulse 2.5s ease-in-out infinite;
+}
+
+/* ── Artwork Rooms ── */
+.works-rooms {
+  display: flex;
+  flex-direction: column;
+  gap: 15vh;
+  padding: 5vh 0 15vh;
+}
+
+.works-room {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 4rem;
+  gap: 6rem;
+}
+
+.works-room--right {
+  flex-direction: row-reverse;
+}
+
+/* Watermark Number */
+.works-room__watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-heading);
+  font-size: clamp(15rem, 35vw, 35rem);
+  font-weight: 300;
+  color: hsl(38 100% 84% / 0.02);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+
+/* Painting Column */
+.works-room__painting-col {
+  flex: 1;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.works-room__painting-link {
+  display: block;
+  text-decoration: none;
+}
+
+.works-room__painting-frame {
+  position: relative;
+  padding: 1.5rem;
+  /* background: hsl(0 0% 4% / 0.5);
+  border: 1px solid hsl(0 0% 100% / 0.03); */
+}
+
+.works-room__painting {
+  max-height: 65vh;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.5));
+  transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+              filter 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.works-room__painting-link:hover .works-room__painting {
+  transform: scale(1.02);
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.7)) brightness(1.03);
+}
+
+.works-room__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    hsl(350 100% 15% / 0.4) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 1s ease;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(30px);
+}
+
+.works-room__painting-link:hover .works-room__glow {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Info Column */
+.works-room__info-col {
+  flex: 0 0 420px;
+  position: relative;
+  z-index: 2;
+}
+
+.works-room__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.works-room__number {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  color: hsl(38 100% 84% / 0.5);
+  margin-bottom: 1.5rem;
+}
+
+.works-room__title-link {
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.works-room__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: hsl(43 45% 90%);
+  line-height: 1.1;
+  transition: color 0.5s ease;
+}
+
+.works-room__title-link:hover .works-room__title {
+  color: hsl(38 100% 84%);
+}
+
+.works-room__native {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: hsl(43 45% 90% / 0.4);
+  font-weight: 300;
+  margin-top: 0.2rem;
+}
+
+.works-room__pronunciation {
+  display: block;
+  font-family: monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: hsl(38 100% 84% / 0.4);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.works-room__divider {
+  width: 40px;
+  height: 1px;
+  background: hsl(38 60% 50% / 0.3);
+  margin: 2rem 0;
+}
+
+.works-room__medium {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: hsl(43 45% 90% / 0.7);
+  margin-bottom: 0.4rem;
+}
+
+.works-room__dims {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: hsl(43 45% 90% / 0.4);
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
+}
+
+.works-room__excerpt {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: hsl(43 45% 90% / 0.6);
+  font-style: italic;
+  margin-bottom: 3rem;
+}
+
+.works-room__enter {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  border: 1px solid hsl(0 0% 100% / 0.15);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: hsl(43 45% 90% / 0.8);
+  text-decoration: none;
+  transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.works-room__enter:hover {
+  color: hsl(38 100% 84%);
+  border-color: hsl(38 100% 84% / 0.4);
+}
+
+/* ── Portfolio Section ── */
+.works-portfolio {
+  padding: 10rem 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.works-portfolio__ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 300px;
+  margin: 0 auto 4rem;
+}
+
+.works-portfolio__ornament-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, hsl(38 60% 50% / 0.3), transparent);
+}
+
+.works-portfolio__ornament-diamond {
+  font-size: 0.6rem;
+  color: hsl(38 100% 84% / 0.3);
+}
+
+.works-portfolio__content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.works-portfolio__title {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  color: hsl(43 45% 90% / 0.9);
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.works-portfolio__subtitle {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: hsl(43 45% 90% / 0.6);
+  font-style: italic;
+  margin-bottom: 3.5rem;
+}
+
+.works-portfolio__link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.works-portfolio__cover-wrap {
+  position: relative;
+  max-width: 360px;
+  margin: 0 auto 2.5rem;
+  overflow: hidden;
+  border: 1px solid hsl(0 0% 100% / 0.05);
+}
+
+.works-portfolio__cover {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 1s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.works-portfolio__link:hover .works-portfolio__cover {
+  transform: scale(1.03);
+}
+
+.works-portfolio__cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: hsl(0 0% 0% / 0.2);
+  transition: background 1s ease;
+}
+
+.works-portfolio__link:hover .works-portfolio__cover-overlay {
+  background: hsl(0 0% 0% / 0.05);
+}
+
+.works-portfolio__cta {
+  display: inline-block;
+  padding: 0.8rem 2.5rem;
+  border: 1px solid hsl(0 0% 100% / 0.15);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(43 45% 90% / 0.7);
+  transition: all 0.6s ease;
+}
+
+.works-portfolio__link:hover .works-portfolio__cta {
+  color: hsl(38 100% 84%);
+  border-color: hsl(38 100% 84% / 0.4);
+}
+
+/* ── Gallery CTA ── */
+.works-gallery-cta {
+  text-align: center;
+  padding: 0 2rem 8rem;
+}
+
+.works-gallery-cta__link {
+  display: inline-block;
+  padding: 1rem 3rem;
+  border: 1px solid hsl(0 0% 100% / 0.15);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: hsl(43 45% 90% / 0.8);
+  text-decoration: none;
+  background: hsl(0 0% 100% / 0.02);
+  transition: all 0.6s ease;
+}
+
+.works-gallery-cta__link:hover {
+  color: hsl(38 100% 84%);
+  border-color: hsl(38 100% 84% / 0.4);
+  background: hsl(38 100% 84% / 0.05);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .works-room {
+    gap: 4rem;
+    padding: 0 3rem;
+  }
+}
+
+@media (max-width: 860px) {
+  .works-rooms {
+    gap: 8rem;
+  }
+
+  .works-room {
+    flex-direction: column !important;
+    text-align: center;
+    gap: 3rem;
+    padding: 0 2rem;
+    min-height: auto;
+  }
+
+  .works-room__info-col {
+    flex: auto;
+  }
+
+  .works-room__info {
+    align-items: center;
+  }
+
+  .works-room__divider {
+    margin: 1.5rem auto;
+  }
+
+  .works-room__painting {
+    max-height: 55vh;
+  }
+
+  .works-room__watermark {
+    font-size: 18rem;
+    top: 40%;
+  }
+
+  .works-hero {
+    min-height: 60vh;
+  }
+}

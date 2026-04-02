@@ -1,115 +1,229 @@
-import { useEffect } from "react";
+import "./Works.css";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { motion, useScroll, useTransform } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import FadeInView from "@/components/FadeInView";
 import ProtectedImage from "@/components/ProtectedImage";
-import TiltCard from "@/components/TiltCard";
+import MagneticButton from "@/components/MagneticButton";
 import { artworks } from "@/data/artworks";
 import portfolioCover from "@/assets/portfolio-cover.png";
 
-const gridItems = [
-  { colSpan: "md:col-span-7", colStart: "md:col-start-1", featured: true },
-  { colSpan: "md:col-span-5", colStart: "md:col-start-8", featured: false },
-  { colSpan: "md:col-span-5", colStart: "md:col-start-2", featured: false },
-  { colSpan: "md:col-span-6", colStart: "md:col-start-7", featured: true },
-  { colSpan: "md:col-span-7", colStart: "md:col-start-1", featured: true },
-  { colSpan: "md:col-span-5", colStart: "md:col-start-8", featured: false },
-  { colSpan: "md:col-span-6", colStart: "md:col-start-1", featured: true },
-  { colSpan: "md:col-span-5", colStart: "md:col-start-7", featured: false },
-  { colSpan: "md:col-span-5", colStart: "md:col-start-2", featured: false },
-  { colSpan: "md:col-span-7", colStart: "md:col-start-6", featured: true },
-  { colSpan: "md:col-span-10", colStart: "md:col-start-2", featured: true },
-];
-
 const Works = () => {
-  useEffect(() => { document.title = "Works — Kamakshi Kaur"; return () => { document.title = "Kamakshi Kaur"; }; }, []);
+  useEffect(() => {
+    document.title = "Works — Kamakshi Kaur";
+    return () => { document.title = "Kamakshi Kaur"; };
+  }, []);
 
   return (
     <PageTransition>
-      <div className="pt-32 md:pt-40 pb-24 px-8 md:px-16">
+      {/* ═══ HERO BANNER ═══ */}
+      <WorksHero />
+
+      {/* ═══ ARTWORK ROOMS ═══ */}
+      <div className="works-rooms">
+        {artworks.map((work, i) => (
+          <ArtworkRoom key={work.id} work={work} index={i} />
+        ))}
+      </div>
+
+      {/* ═══ PORTFOLIO SECTION ═══ */}
+      <section className="works-portfolio">
         <FadeInView>
-          <h1 className="font-heading text-4xl md:text-6xl tracking-[0.05em] mb-4 text-inherit opacity-85">
-            Works
-          </h1>
-          <p className="font-body text-lg text-muted-foreground max-w-xl mb-24">
-            "Meant to be felt, as much as seen."
-          </p>
+          <div className="works-portfolio__ornament">
+            <div className="works-portfolio__ornament-line" />
+            <span className="works-portfolio__ornament-diamond">◇</span>
+            <div className="works-portfolio__ornament-line" />
+          </div>
         </FadeInView>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-20 md:gap-y-28 gap-x-8">
-          {artworks.map((work, i) => {
-            const item = gridItems[i % gridItems.length];
-            return (
-              <FadeInView
-                key={work.id}
-                delay={i * 0.05}
-                className={`${item.colSpan} ${item.colStart}`}
-              >
-                <Link to={`/works/${work.id}`} className="block group relative">
-                  <div className="relative isolate">
-                    {/* Red glow — static gradient, only opacity transitions (zero filter cost) */}
-                    <div
-                      className="absolute -inset-10 md:-inset-16 rounded-[50%] opacity-0 group-hover:opacity-100 transition-opacity ease-out -z-10"
-                      style={{
-                        transitionDuration: "1.2s",
-                        background: "radial-gradient(ellipse at center, rgba(163,0,27,0.4) 0%, rgba(103,0,17,0.15) 50%, transparent 70%)",
-                      }}
-                    />
-                    <ProtectedImage
-                      src={work.image}
-                      alt={work.title}
-                      className={`relative w-full h-auto object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03] ${
-                        item.featured ? "max-h-[70vh]" : "max-h-[50vh]"
-                      }`}
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="mt-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 antialiased">
-                    <h3 className="font-heading text-xl font-medium tracking-wide text-secondary/95 group-hover:italic transition-all duration-500">
-                      {work.title}
-                    </h3>
-                    <p className="font-body text-sm font-medium tracking-wide text-foreground/85 mt-1.5">
-                      {work.medium}
-                    </p>
-                  </div>
-                </Link>
-              </FadeInView>
-            );
-          })}
-        </div>
-
-        {/* Portfolio Section */}
-        <FadeInView delay={0.1} className="mt-32 md:mt-40">
-          <div className="w-12 h-px bg-primary/40 mx-auto mb-16" />
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="font-heading text-2xl md:text-3xl tracking-[0.05em] text-foreground/80 mb-6">
-              Portfolio
-            </h2>
-            <p className="font-body text-lg text-muted-foreground mb-10 italic">
+        <FadeInView delay={0.1}>
+          <div className="works-portfolio__content">
+            <h2 className="works-portfolio__title">Portfolio</h2>
+            <p className="works-portfolio__subtitle">
               A curated selection of works, collected in one place.
             </p>
             <a
               href="/Kamakshi-Kaur-Portfolio.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-block"
+              className="works-portfolio__link group"
             >
-              <div className="relative overflow-hidden max-w-md mx-auto mb-8">
+              <div className="works-portfolio__cover-wrap">
                 <ProtectedImage
                   src={portfolioCover}
                   alt="Portfolio"
-                  className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  className="works-portfolio__cover"
                 />
-                <div className="absolute inset-0 bg-background/20 group-hover:bg-background/10 transition-colors duration-700" />
+                <div className="works-portfolio__cover-overlay" />
               </div>
-              <span className="inline-block px-8 py-3 border border-foreground/20 font-body text-sm tracking-[0.2em] uppercase text-foreground/70 hover:text-foreground hover:border-primary/60 slow-transition">
+              <span className="works-portfolio__cta">
                 View Portfolio ↗
               </span>
             </a>
           </div>
         </FadeInView>
-      </div>
+      </section>
+
+      {/* ═══ GALLERY LINK ═══ */}
+      <FadeInView delay={0.05}>
+        <div className="works-gallery-cta">
+          <MagneticButton pull={30}>
+            <Link to="/gallery" className="works-gallery-cta__link">
+              View All in Gallery →
+            </Link>
+          </MagneticButton>
+        </div>
+      </FadeInView>
     </PageTransition>
+  );
+};
+
+/* ── Hero Banner ── */
+const WorksHero = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const lineScale = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+
+  return (
+    <div ref={ref} className="works-hero">
+      <motion.div
+        className="works-hero__content"
+        style={{ y: titleY, opacity: titleOpacity }}
+      >
+        <motion.div
+          className="works-hero__line"
+          style={{ scaleX: lineScale, transformOrigin: "left" }}
+        />
+        <motion.h1
+          className="works-hero__title"
+          initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+          animate={{ opacity: 0.9, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1], delay: 0.3 }}
+        >
+          Works
+        </motion.h1>
+        <motion.p
+          className="works-hero__quote"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 0.7, y: 0 }}
+          transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1], delay: 0.8 }}
+        >
+          "Meant to be felt, as much as seen."
+        </motion.p>
+        <motion.div
+          className="works-hero__count"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ delay: 1.2, duration: 1 }}
+        >
+          {artworks.length} Works
+        </motion.div>
+      </motion.div>
+
+      {/* Subtle scroll cue */}
+      <motion.div
+        className="works-hero__scroll"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.35 }}
+        transition={{ delay: 2, duration: 1.5 }}
+      >
+        <div className="works-hero__scroll-line" />
+      </motion.div>
+    </div>
+  );
+};
+
+/* ── Individual Artwork "Room" ── */
+interface ArtworkRoomProps {
+  work: typeof artworks[0];
+  index: number;
+}
+
+const ArtworkRoom = ({ work, index }: ArtworkRoomProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  // Parallax: painting moves slightly slower
+  const paintingY = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const textY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+
+  const isEven = index % 2 === 0;
+  const num = String(index + 1).padStart(2, "0");
+
+  return (
+    <div
+      ref={ref}
+      className={`works-room ${isEven ? "works-room--left" : "works-room--right"}`}
+    >
+      {/* Background number — watermark */}
+      <div className="works-room__watermark" aria-hidden="true">
+        {num}
+      </div>
+
+      {/* Painting side */}
+      <motion.div className="works-room__painting-col" style={{ y: paintingY }}>
+        <Link to={`/works/${work.id}`} className="works-room__painting-link group">
+          <div className="works-room__painting-frame">
+            <ProtectedImage
+              src={work.image}
+              alt={work.title}
+              className="works-room__painting"
+              loading="lazy"
+            />
+            {/* Ambient glow */}
+            <div className="works-room__glow" />
+          </div>
+        </Link>
+      </motion.div>
+
+      {/* Info side */}
+      <motion.div className="works-room__info-col" style={{ y: textY }}>
+        <FadeInView delay={0.1}>
+          <div className="works-room__info">
+            <span className="works-room__number">{num}</span>
+
+            <Link to={`/works/${work.id}`} className="works-room__title-link">
+              <h2 className="works-room__title">{work.title}</h2>
+            </Link>
+
+            {work.nativeTitle && (
+              <span className="works-room__native">{work.nativeTitle}</span>
+            )}
+            {work.pronunciation && (
+              <span className="works-room__pronunciation">[ {work.pronunciation} ]</span>
+            )}
+
+            <div className="works-room__divider" />
+
+            <p className="works-room__medium">{work.medium}</p>
+            <p className="works-room__dims">
+              {work.dimensions} · {work.year}
+            </p>
+
+            <p className="works-room__excerpt">
+              {work.description.length > 160
+                ? work.description.slice(0, 160) + "…"
+                : work.description}
+            </p>
+
+            <MagneticButton pull={20}>
+              <Link to={`/works/${work.id}`} className="works-room__enter">
+                Enter →
+              </Link>
+            </MagneticButton>
+          </div>
+        </FadeInView>
+      </motion.div>
+    </div>
   );
 };
 

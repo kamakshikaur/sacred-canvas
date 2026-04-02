@@ -1,17 +1,34 @@
-import { useState, useEffect } from "react";
+import "./ArtworkDetail.css";
+import { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import FadeInView from "@/components/FadeInView";
 import ArtworkGallery from "@/components/ArtworkGallery";
 import { useSound } from "@/context/SoundContext";
 import ProtectedImage from "@/components/ProtectedImage";
 import { artworks } from "@/data/artworks";
+import MagneticButton from "@/components/MagneticButton";
 
 const ArtworkDetail = () => {
   const { id } = useParams();
   const artwork = artworks.find((a) => a.id === id);
   const [galleryOpen, setGalleryOpen] = useState(false);
+
+  const currentIndex = artworks.findIndex((a) => a.id === id);
+  const prevArtwork = currentIndex > 0 ? artworks[currentIndex - 1] : null;
+  const nextArtwork = currentIndex < artworks.length - 1 ? artworks[currentIndex + 1] : null;
+
+  // Parallax refs
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const heroY = useTransform(heroProgress, [0, 1], [0, 150]);
+  const heroScale = useTransform(heroProgress, [0, 1], [1, 1.08]);
+  const heroOpacity = useTransform(heroProgress, [0, 0.7, 1], [1, 0.6, 0.2]);
+  const overlayOpacity = useTransform(heroProgress, [0, 0.5, 1], [0.15, 0.4, 0.8]);
 
   useEffect(() => {
     if (artwork) {
@@ -52,9 +69,10 @@ const ArtworkDetail = () => {
     );
   }
 
+  const artworkNumber = String(currentIndex + 1).padStart(2, "0");
+
   return (
     <PageTransition>
-      {/* Gallery modal */}
       <ArtworkGallery
         images={artwork.images}
         title={artwork.title}
@@ -62,120 +80,244 @@ const ArtworkDetail = () => {
         onClose={() => setGalleryOpen(false)}
       />
 
-      <div className="pt-24 md:pt-32 relative">
-        {/* Atmospheric field — pure CSS gradients, no blur filters */}
-        <div
-          className="absolute inset-0 overflow-hidden pointer-events-none -z-10"
-          style={{ height: "100vh", top: "-5vh" }}
-        >
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `
-                radial-gradient(ellipse at 50% 40%, hsla(348, 100%, 15%, 0.5) 0%, transparent 55%),
-                radial-gradient(ellipse at 60% 35%, hsla(348, 100%, 12%, 0.35) 0%, transparent 50%),
-                radial-gradient(ellipse at 40% 50%, hsla(0, 0%, 8%, 0.6) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 50%, hsla(0, 0%, 6%, 0.9) 0%, transparent 75%)
-              `,
-            }}
-          />
-          {/* Single subtle breathing layer — CSS animation, no Framer Motion */}
-          <div
-            className="absolute inset-[-20%] animate-pulse"
-            style={{
-              background: "radial-gradient(ellipse at 55% 45%, hsla(348, 100%, 18%, 0.25) 0%, transparent 50%)",
-              animationDuration: "6s",
-            }}
-          />
+      {/* ═══ HERO: Full-viewport painting ═══ */}
+      <div ref={heroRef} className="ad-hero">
+        {/* Atmospheric background */}
+        <div className="ad-hero__atmosphere">
+          <div className="ad-hero__atmos-layer ad-hero__atmos-layer--1" />
+          <div className="ad-hero__atmos-layer ad-hero__atmos-layer--2" />
+          <div className="ad-hero__atmos-layer ad-hero__atmos-layer--3" />
         </div>
 
-        {/* Hero artwork — clickable to open gallery */}
+        {/* Painting with parallax */}
         <motion.div
-          className="relative w-full px-4 md:px-16 flex justify-center cursor-pointer z-10"
-          initial={{ opacity: 0, scale: 1.02 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.6, ease: [0.25, 0.1, 0.25, 1] }}
+          className="ad-hero__painting-wrap"
+          style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
           onClick={() => setGalleryOpen(true)}
         >
-          <ProtectedImage
-            src={artwork.image}
-            alt={artwork.title}
-            className="relative max-h-[70vh] w-auto object-contain hover:scale-[1.01] transition-transform"
-            style={{ transitionDuration: "1.6s", transitionTimingFunction: "cubic-bezier(0.25,0.1,0.25,1)" }}
-          />
+          <motion.div
+            initial={{ opacity: 0, scale: 1.06 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 2.2, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <ProtectedImage
+              src={artwork.image}
+              alt={artwork.title}
+              className="ad-hero__painting"
+            />
+          </motion.div>
+          {/* Click hint */}
+          <motion.div
+            className="ad-hero__click-hint"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2, duration: 1.5 }}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M3 3L17 17M17 3L3 17" stroke="currentColor" strokeWidth="0.8" opacity="0.4"/>
+              <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="0.8" opacity="0.4"/>
+            </svg>
+            <span>Click to expand</span>
+          </motion.div>
         </motion.div>
 
-        {/* Content */}
-        <div className="max-w-3xl mx-auto px-8 py-20 md:py-32">
+        {/* Dark gradient overlay that intensifies on scroll */}
+        <motion.div
+          className="ad-hero__overlay"
+          style={{ opacity: overlayOpacity }}
+        />
+
+        {/* Artwork number — large, subtle */}
+        <motion.div
+          className="ad-hero__number"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1.2, duration: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
+        >
+          {artworkNumber}
+        </motion.div>
+
+        {/* Title floating at bottom of hero */}
+        <motion.div
+          className="ad-hero__title-float"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
+        >
+          <h1 className="ad-hero__title">
+            {artwork.title}
+          </h1>
+          {artwork.nativeTitle && (
+            <span className="ad-hero__native">{artwork.nativeTitle}</span>
+          )}
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="ad-hero__scroll-cue"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.5 }}
+          transition={{ delay: 2.5, duration: 1.5 }}
+        >
+          <div className="ad-hero__scroll-line" />
+        </motion.div>
+      </div>
+
+      {/* ═══ DETAILS SECTION: Editorial split layout ═══ */}
+      <div className="ad-details">
+        {/* Left column — sticky painting (desktop) */}
+        <div className="ad-details__left">
+          <div className="ad-details__sticky-image">
+            <ProtectedImage
+              src={artwork.image}
+              alt={artwork.title}
+              className="ad-details__side-painting"
+              onClick={() => setGalleryOpen(true)}
+            />
+          </div>
+        </div>
+
+        {/* Right column — flowing content */}
+        <div className="ad-details__right">
+          {/* Title block */}
           <FadeInView>
-            <div className="flex flex-col gap-3">
-              <h1 className="font-heading text-4xl md:text-6xl tracking-[0.05em] text-foreground flex items-center flex-wrap gap-4 md:gap-6">
-                <span>{artwork.title}</span>
-                {artwork.nativeTitle && (
-                  <span className="font-punjabi text-4xl md:text-6xl text-foreground/70 font-normal" style={{ transform: "translateY(-1px)" }}>
-                    {artwork.nativeTitle}
-                  </span>
-                )}
-              </h1>
+            <div className="ad-details__title-block">
+              <span className="ad-details__eyebrow">No. {artworkNumber}</span>
+              <h2 className="ad-details__title">
+                {artwork.title}
+              </h2>
+              {artwork.nativeTitle && (
+                <span className="ad-details__native">{artwork.nativeTitle}</span>
+              )}
               {artwork.pronunciation && (
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-secondary/80 text-xs">◆</span>
-                  <span className="font-mono text-[13px] tracking-[0.2em] text-secondary/90 lowercase italic">
-                    [ {artwork.pronunciation} ]
-                  </span>
-                </div>
+                <span className="ad-details__pronunciation">
+                  ◆ [ {artwork.pronunciation} ]
+                </span>
               )}
             </div>
           </FadeInView>
 
-          <FadeInView delay={0.3}>
-            <div className="w-12 h-px bg-primary/60 my-12" />
+          {/* Divider ornament */}
+          <FadeInView delay={0.15}>
+            <div className="ad-details__ornament">
+              <div className="ad-details__ornament-line" />
+              <div className="ad-details__ornament-diamond">◇</div>
+              <div className="ad-details__ornament-line" />
+            </div>
           </FadeInView>
 
-          {/* Structured details — Medium & Size only */}
-          <FadeInView delay={0.4}>
-            <div className="mb-16 space-y-5">
-              <div>
-                <h2 className="font-heading text-xs tracking-[0.3em] uppercase mb-2 text-secondary">
-                  Medium
-                </h2>
-                <p className="font-body text-lg leading-relaxed text-foreground/70">
-                  {artwork.medium}
-                </p>
+          {/* Metadata grid */}
+          <FadeInView delay={0.25}>
+            <div className="ad-details__meta-grid">
+              <div className="ad-details__meta-item">
+                <span className="ad-details__meta-label">Medium</span>
+                <span className="ad-details__meta-value">{artwork.medium}</span>
               </div>
-              <div>
-                <h2 className="font-heading text-xs tracking-[0.3em] uppercase mb-2 text-secondary">
-                  Size
-                </h2>
-                <p className="font-body text-lg leading-relaxed text-foreground/70">
-                  {artwork.dimensions}
-                </p>
+              <div className="ad-details__meta-item">
+                <span className="ad-details__meta-label">Dimensions</span>
+                <span className="ad-details__meta-value">{artwork.dimensions}</span>
+              </div>
+              <div className="ad-details__meta-item">
+                <span className="ad-details__meta-label">Year</span>
+                <span className="ad-details__meta-value">{artwork.year}</span>
               </div>
             </div>
           </FadeInView>
 
-          <FadeInView delay={0.5}>
-            <div className="w-8 h-px bg-primary/40 mb-12" />
+          {/* Description — the poetic text */}
+          <FadeInView delay={0.35}>
+            <div className="ad-details__quote-block">
+              <div className="ad-details__quote-mark">"</div>
+              <p className="ad-details__description">
+                {artwork.description}
+              </p>
+            </div>
           </FadeInView>
 
-          {/* Meaning */}
-          <FadeInView delay={0.6}>
-            <div className="mb-16">
-              <p className="font-body text-xl md:text-2xl leading-relaxed text-foreground/60 italic">
+          {/* Meaning — deeper reflection */}
+          <FadeInView delay={0.45}>
+            <div className="ad-details__meaning-block">
+              <span className="ad-details__meaning-label">Artist's Reflection</span>
+              <p className="ad-details__meaning">
                 {artwork.meaning}
               </p>
             </div>
           </FadeInView>
 
-          <FadeInView delay={0.8} className="mt-20">
-            <Link
-              to="/works"
-              className="inline-block px-8 py-3 border border-foreground/20 font-body text-sm tracking-[0.2em] uppercase text-foreground/70 hover:text-foreground hover:border-primary/60 slow-transition"
-            >
-              ← Back to Works
-            </Link>
+          {/* Closing ornament */}
+          <FadeInView delay={0.5}>
+            <div className="ad-details__ornament ad-details__ornament--end">
+              <div className="ad-details__ornament-line" />
+              <div className="ad-details__ornament-diamond">◇</div>
+              <div className="ad-details__ornament-line" />
+            </div>
           </FadeInView>
         </div>
+      </div>
+
+      {/* ═══ NEXT/PREV NAVIGATION ═══ */}
+      <div className="ad-nav">
+        <FadeInView>
+          <div className="ad-nav__inner">
+            {prevArtwork ? (
+              <Link to={`/works/${prevArtwork.id}`} className="ad-nav__link ad-nav__link--prev group">
+                <div className="ad-nav__link-thumb-wrap">
+                  <ProtectedImage
+                    src={prevArtwork.image}
+                    alt={prevArtwork.title}
+                    className="ad-nav__link-thumb"
+                  />
+                </div>
+                <div className="ad-nav__link-text">
+                  <span className="ad-nav__link-label">Previous</span>
+                  <span className="ad-nav__link-title">{prevArtwork.title}</span>
+                </div>
+              </Link>
+            ) : (
+              <MagneticButton pull={25}>
+                <Link
+                  to="/works"
+                  className="ad-nav__back-link"
+                >
+                  ← All Works
+                </Link>
+              </MagneticButton>
+            )}
+
+            <div className="ad-nav__center">
+              <MagneticButton pull={25}>
+                <Link to="/gallery" className="ad-nav__gallery-link">
+                  Gallery
+                </Link>
+              </MagneticButton>
+            </div>
+
+            {nextArtwork ? (
+              <Link to={`/works/${nextArtwork.id}`} className="ad-nav__link ad-nav__link--next group">
+                <div className="ad-nav__link-text" style={{ textAlign: "right" }}>
+                  <span className="ad-nav__link-label">Next</span>
+                  <span className="ad-nav__link-title">{nextArtwork.title}</span>
+                </div>
+                <div className="ad-nav__link-thumb-wrap">
+                  <ProtectedImage
+                    src={nextArtwork.image}
+                    alt={nextArtwork.title}
+                    className="ad-nav__link-thumb"
+                  />
+                </div>
+              </Link>
+            ) : (
+              <MagneticButton pull={25}>
+                <Link
+                  to="/works"
+                  className="ad-nav__back-link"
+                >
+                  All Works →
+                </Link>
+              </MagneticButton>
+            )}
+          </div>
+        </FadeInView>
       </div>
     </PageTransition>
   );

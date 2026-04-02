@@ -22,36 +22,28 @@ const Index = () => {
     offset: ["start start", "end start"],
   });
 
-  // Eye zooms in massively — finishes zooming earlier so we have space to linger
-  const eyeScale = useTransform(scrollYProgress, [0, 0.3, 0.45], [1, 4, 80]);
-  
-  // Keep the eye solid until we are completely inside the pupil, then fade it out
-  const eyeOpacity = useTransform(scrollYProgress, [0.4, 0.5], [1, 0]);
-  
-  // Rolling eye: It elegantly rotates as you step inside
-  const eyeRotate = useTransform(scrollYProgress, [0, 0.45], [0, 90]);
+  // Eye zooms in — capped at 12x so the detail stays sharp, not a blurry mess
+  const eyeScale = useTransform(scrollYProgress, [0, 0.5, 0.9], [1, 3.5, 12]);
+  const eyeOpacity = useTransform(scrollYProgress, [0.5, 0.85], [1, 0]);
+  const eyeRotate = useTransform(scrollYProgress, [0, 0.9], [0, 45]);
   
   const titleOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
   const titleY = useTransform(scrollYProgress, [0, 0.12], [0, -50]);
   const titleBlur = useTransform(scrollYProgress, [0, 0.1], ["blur(0px)", "blur(20px)"]);
   const scrollHintOpacity = useTransform(scrollYProgress, [0, 0.05], [0.4, 0]);
 
-  // Content emerges perfectly timed as we step into the darkness
-  const contentOpacity = useTransform(scrollYProgress, [0.45, 0.6], [0, 1]);
-  const contentScale = useTransform(scrollYProgress, [0.45, 0.6], [0.95, 1]);
-
   return (
     <PageTransition>
-      {/* Eye-zoom hero — scroll INTO the eye, content reveals from within */}
-      <div ref={heroRef} className="relative h-[400vh]">
+      {/* Eye-zoom hero */}
+      <div ref={heroRef} className="relative h-[250vh]">
         <div className="sticky top-0 h-screen overflow-hidden">
-          {/* The Eye — zooms into the pupil, gently floating when idle */}
+          {/* The Eye */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center will-change-transform"
             style={{ scale: eyeScale, opacity: eyeOpacity, rotate: eyeRotate }}
             animate={{ 
               y: [0, -15, 0],
-              rotateZ: [0, 2, -2, 0] // subtle breathing rotation
+              rotateZ: [0, 2, -2, 0]
             }}
             transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
           >
@@ -78,27 +70,6 @@ const Index = () => {
             </motion.h1>
           </motion.div>
 
-          {/* Content that emerges FROM the darkness inside the eye */}
-          <motion.div
-            className="absolute inset-0 flex flex-col items-center justify-center z-20"
-            style={{ opacity: contentOpacity, scale: contentScale }}
-          >
-            <p 
-              className="font-heading text-3xl md:text-5xl leading-relaxed italic text-foreground tracking-wide text-center max-w-4xl px-8 mb-16 drop-shadow-md"
-              style={{ textShadow: "0px 4px 30px rgba(255, 255, 255, 0.15)" }}
-            >
-              "What is created completes within you."
-            </p>
-            <MagneticButton>
-              <Link
-                to="/works"
-                className="px-8 py-3 border border-foreground/20 font-body text-sm tracking-[0.2em] uppercase text-foreground/70 hover:text-foreground hover:border-primary/60 slow-transition"
-              >
-                View Works
-              </Link>
-            </MagneticButton>
-          </motion.div>
-
           {/* Scroll indicator */}
           <motion.div
             className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10"
@@ -109,8 +80,37 @@ const Index = () => {
               Scroll
             </span>
           </motion.div>
+
+          {/* Bottom gradient — eliminates the harsh horizontal cut */}
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-40 z-20 pointer-events-none"
+            style={{ background: "linear-gradient(to bottom, transparent, #0a0505)" }}
+          />
         </div>
       </div>
+
+      {/* Artist quote — overlaps upward with glass effect, text is lowered for spacing */}
+      <section className="relative -mt-24 pt-44 pb-32 md:pb-40 px-8 z-10 backdrop-blur-2xl bg-black/30 w-full rounded-t-[2rem] shadow-[0_-30px_60px_rgba(0,0,0,0.5)]">
+        <div className="max-w-4xl mx-auto text-center">
+          <FadeInView>
+            <p 
+              className="font-heading text-3xl md:text-5xl leading-relaxed italic text-foreground tracking-wide"
+            >
+              "What is created completes within you."
+            </p>
+          </FadeInView>
+          <FadeInView delay={0.15} className="mt-16">
+            <MagneticButton>
+              <Link
+                to="/works"
+                className="px-8 py-3 border border-foreground/20 font-body text-sm tracking-[0.2em] uppercase text-foreground/70 hover:text-foreground hover:border-primary/60 slow-transition"
+              >
+                View Works
+              </Link>
+            </MagneticButton>
+          </FadeInView>
+        </div>
+      </section>
 
       {/* Featured works */}
       <section className="px-8 md:px-16 py-32">
@@ -118,24 +118,18 @@ const Index = () => {
           {featured.map((work, i) => {
             const layouts = [
               "md:col-span-8 md:col-start-3",
-              "md:col-span-5 md:col-start-1 md:-mt-24",
-              "md:col-span-8 md:col-start-3 md:-mt-12",
+              "md:col-span-6 md:col-start-1 md:-mt-24",
+              "md:col-span-5 md:col-start-4 md:-mt-12",
             ];
             return (
               <FadeInView key={work.id} delay={i * 0.06} className={layouts[i]}>
                 <Link to={`/works/${work.id}`} className="block group artwork-item relative">
-                  <div className="relative isolate">
-                    <div
-                      className="absolute -inset-10 md:-inset-16 rounded-[50%] opacity-0 group-hover:opacity-100 transition-opacity ease-out -z-10"
-                      style={{
-                        transitionDuration: "1.2s",
-                        background: "radial-gradient(ellipse at center, rgba(163,0,27,0.4) 0%, rgba(103,0,17,0.15) 50%, transparent 70%)",
-                      }}
-                    />
+                  <div className="relative isolate flex justify-center items-center">
                     <ProtectedImage
                       src={work.image}
                       alt={work.title}
-                      className="relative w-full h-auto object-contain transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                      className="relative w-full h-auto object-contain transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:scale-[1.02] group-hover:drop-shadow-[0_20px_40px_rgba(163,0,27,0.25)] group-hover:-translate-y-2"
+                      style={{ transitionProperty: "transform, filter" }}
                       loading="lazy"
                     />
                   </div>
@@ -169,7 +163,7 @@ const Index = () => {
             <div className="w-12 h-px bg-primary/40 mx-auto mb-16" />
           </FadeInView>
           <FadeInView delay={0.08}>
-            <p className="font-heading text-2xl md:text-3xl italic text-foreground/60 leading-relaxed mb-12">
+            <p className="font-heading text-2xl md:text-3xl italic text-foreground/95 drop-shadow-md leading-relaxed mb-12">
               "If something within you responded — step closer."
             </p>
           </FadeInView>
@@ -177,7 +171,7 @@ const Index = () => {
             <MagneticButton pull={40}>
               <Link
                 to="/contact"
-                className="group inline-block relative px-10 py-4 border border-foreground/20 font-body text-sm tracking-[0.2em] uppercase text-foreground/70 hover:text-secondary hover:border-secondary/40 slow-transition"
+                className="group inline-block relative px-10 py-4 border border-foreground/30 bg-background/20 font-body text-sm tracking-[0.2em] uppercase text-foreground/95 hover:text-secondary hover:border-secondary/40 slow-transition"
               >
                 Get in Touch
               </Link>

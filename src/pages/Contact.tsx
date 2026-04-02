@@ -16,7 +16,7 @@ const Contact = () => {
           </FadeInView>
 
           <FadeInView delay={0.2}>
-            <p className="font-body text-xl text-foreground/60 italic leading-relaxed mb-16 text-center">
+            <p className="font-body text-xl text-foreground/90 drop-shadow-sm italic leading-relaxed mb-16 text-center">
               If something within you responded, reach out.
             </p>
           </FadeInView>
@@ -25,13 +25,13 @@ const Contact = () => {
             <div className="space-y-6">
               <a
                 href="mailto:kamakshikaurolive@gmail.com"
-                className="block text-lg tracking-wider text-foreground/70 hover:text-secondary slow-transition font-serif"
+                className="block text-lg tracking-wider text-foreground/90 hover:text-secondary slow-transition font-serif"
               >
                 kamakshikaurolive@gmail.com
               </a>
               <a
                 href="tel:+918849931464"
-                className="block text-lg tracking-wider text-foreground/70 hover:text-secondary slow-transition font-serif"
+                className="block text-lg tracking-wider text-foreground/90 hover:text-secondary slow-transition font-serif"
               >
                 +91 8849931464
               </a>
