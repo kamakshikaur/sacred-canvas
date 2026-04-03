@@ -1,4 +1,4 @@
-import { motion, useSpring, useTransform, useMotionValue } from "framer-motion";
+import { m, useSpring, useMotionValue } from "framer-motion";
 import { ReactNode, useRef } from "react";
 
 interface MagneticButtonProps {
@@ -39,7 +39,7 @@ const MagneticButton = ({ children, className = "", pull = 30 }: MagneticButtonP
   };
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       className={`inline-block ${className}`}
       onMouseMove={handleMouseMove}
@@ -47,7 +47,7 @@ const MagneticButton = ({ children, className = "", pull = 30 }: MagneticButtonP
       style={{ x: springX, y: springY }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 };
 

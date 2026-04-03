@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { LazyMotion, domAnimation } from "framer-motion";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -61,32 +62,34 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SoundProvider>
-        <UIProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <ScrollToTop />
-              <LiquidBackground />
-              <InteractiveCursor />
-              <VoiceoverPlayer />
-              <Navigation />
-              <GalleryOverlay />
-              <div className="pb-16">
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/works" element={<Works />} />
-                  <Route path="/works/:id" element={<ArtworkDetail />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </div>
-            </BrowserRouter>
-          </TooltipProvider>
-        </UIProvider>
-      </SoundProvider>
+      <LazyMotion features={domAnimation} strict>
+        <SoundProvider>
+          <UIProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <ScrollToTop />
+                <LiquidBackground />
+                <InteractiveCursor />
+                <VoiceoverPlayer />
+                <Navigation />
+                <GalleryOverlay />
+                <div className="pb-16">
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/works" element={<Works />} />
+                    <Route path="/works/:id" element={<ArtworkDetail />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </div>
+              </BrowserRouter>
+            </TooltipProvider>
+          </UIProvider>
+        </SoundProvider>
+      </LazyMotion>
     </QueryClientProvider>
   );
 };

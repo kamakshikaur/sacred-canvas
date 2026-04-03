@@ -97,10 +97,6 @@ const Index = () => {
             </span>
           </motion.div>
 
-          <div 
-            className="absolute bottom-0 left-0 right-0 h-40 z-20 pointer-events-none"
-            style={{ background: "linear-gradient(to bottom, transparent, hsl(var(--background)))" }}
-          />
         </div>
       </div>
 
@@ -141,7 +137,7 @@ const Index = () => {
                     <ProtectedImage
                       src={work.image}
                       alt={work.title}
-                      className="relative w-full h-auto object-contain transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:scale-[1.02] group-hover:drop-shadow-[0_20px_40px_rgba(163,0,27,0.25)] group-hover:-translate-y-2"
+                      className="relative w-full h-auto object-contain transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:scale-[1.02] group-hover:drop-shadow-[0_40px_70px_rgba(255,20,40,0.8)] group-hover:-translate-y-2"
                       style={{ transitionProperty: "transform, filter" }}
                       loading="lazy"
                     />

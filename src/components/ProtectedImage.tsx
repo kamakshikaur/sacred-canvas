@@ -3,7 +3,7 @@ import type { ImgHTMLAttributes } from "react";
 interface ProtectedImageProps extends ImgHTMLAttributes<HTMLImageElement> {}
 
 const ProtectedImage = ({ className, style, ...props }: ProtectedImageProps) => (
-  <div className="relative inline-block overflow-hidden group/protected">
+  <div className="relative inline-block group/protected">
     <img
       {...props}
       className={className}
