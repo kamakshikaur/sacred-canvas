@@ -127,15 +127,7 @@ const ArtworkDetail = () => {
           style={{ opacity: overlayOpacity }}
         />
 
-        {/* Artwork number — large, subtle */}
-        <motion.div
-          className="ad-hero__number"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.2, duration: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          {artworkNumber}
-        </motion.div>
+        {/* Artwork number removed */}
 
         {/* Title floating at bottom of hero */}
         <motion.div
@@ -182,7 +174,6 @@ const ArtworkDetail = () => {
           {/* Title block */}
           <FadeInView>
             <div className="ad-details__title-block">
-              <span className="ad-details__eyebrow">No. {artworkNumber}</span>
               <h2 className="ad-details__title">
                 {artwork.title}
               </h2>
@@ -197,29 +188,18 @@ const ArtworkDetail = () => {
             </div>
           </FadeInView>
 
-          {/* Divider ornament */}
-          <FadeInView delay={0.15}>
-            <div className="ad-details__ornament">
-              <div className="ad-details__ornament-line" />
-              <div className="ad-details__ornament-diamond">◇</div>
-              <div className="ad-details__ornament-line" />
-            </div>
-          </FadeInView>
+          {/* Divider ornament removed */}
 
           {/* Metadata grid */}
           <FadeInView delay={0.25}>
             <div className="ad-details__meta-grid">
               <div className="ad-details__meta-item">
                 <span className="ad-details__meta-label">Medium</span>
-                <span className="ad-details__meta-value">{artwork.medium}</span>
+                <span className="ad-details__meta-value">{artwork.detailedMedium || artwork.medium}</span>
               </div>
               <div className="ad-details__meta-item">
                 <span className="ad-details__meta-label">Dimensions</span>
                 <span className="ad-details__meta-value">{artwork.dimensions}</span>
-              </div>
-              <div className="ad-details__meta-item">
-                <span className="ad-details__meta-label">Year</span>
-                <span className="ad-details__meta-value">{artwork.year}</span>
               </div>
             </div>
           </FadeInView>
@@ -239,19 +219,12 @@ const ArtworkDetail = () => {
             <div className="ad-details__meaning-block">
               <span className="ad-details__meaning-label">Artist's Reflection</span>
               <p className="ad-details__meaning">
-                {artwork.meaning}
+                {artwork.artistReflection}
               </p>
             </div>
           </FadeInView>
 
-          {/* Closing ornament */}
-          <FadeInView delay={0.5}>
-            <div className="ad-details__ornament ad-details__ornament--end">
-              <div className="ad-details__ornament-line" />
-              <div className="ad-details__ornament-diamond">◇</div>
-              <div className="ad-details__ornament-line" />
-            </div>
-          </FadeInView>
+          {/* Closing ornament removed */}
         </div>
       </div>
 

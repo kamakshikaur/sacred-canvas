@@ -29,13 +29,7 @@ const Works = () => {
 
       {/* ═══ PORTFOLIO SECTION ═══ */}
       <section className="works-portfolio">
-        <FadeInView>
-          <div className="works-portfolio__ornament">
-            <div className="works-portfolio__ornament-line" />
-            <span className="works-portfolio__ornament-diamond">◇</span>
-            <div className="works-portfolio__ornament-line" />
-          </div>
-        </FadeInView>
+        {/* Ornament removed */}
 
         <FadeInView delay={0.1}>
           <div className="works-portfolio__content">
@@ -58,7 +52,10 @@ const Works = () => {
                 <div className="works-portfolio__cover-overlay" />
               </div>
               <span className="works-portfolio__cta">
-                View Portfolio ↗
+                View Portfolio
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" className="transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1">
+                  <path d="M5 15L15 5M15 5H7.5M15 5V12.5" stroke="currentColor" strokeWidth="1.5" />
+                </svg>
               </span>
             </a>
           </div>
@@ -164,10 +161,7 @@ const ArtworkRoom = ({ work, index }: ArtworkRoomProps) => {
       ref={ref}
       className={`works-room ${isEven ? "works-room--left" : "works-room--right"}`}
     >
-      {/* Background number — watermark */}
-      <div className="works-room__watermark" aria-hidden="true">
-        {num}
-      </div>
+      {/* Background number removed as requested */}
 
       {/* Painting side */}
       <motion.div className="works-room__painting-col" style={{ y: paintingY }}>
@@ -189,8 +183,6 @@ const ArtworkRoom = ({ work, index }: ArtworkRoomProps) => {
       <motion.div className="works-room__info-col" style={{ y: textY }}>
         <FadeInView delay={0.1}>
           <div className="works-room__info">
-            <span className="works-room__number">{num}</span>
-
             <Link to={`/works/${work.id}`} className="works-room__title-link">
               <h2 className="works-room__title">{work.title}</h2>
             </Link>
@@ -206,13 +198,11 @@ const ArtworkRoom = ({ work, index }: ArtworkRoomProps) => {
 
             <p className="works-room__medium">{work.medium}</p>
             <p className="works-room__dims">
-              {work.dimensions} · {work.year}
+              {work.dimensions}
             </p>
 
-            <p className="works-room__excerpt">
-              {work.description.length > 160
-                ? work.description.slice(0, 160) + "…"
-                : work.description}
+            <p className="works-room__excerpt line-clamp-3">
+              {work.description}
             </p>
 
             <MagneticButton pull={20}>

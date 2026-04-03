@@ -126,6 +126,7 @@
 @layer utilities {
   .font-heading {
     font-family: var(--font-heading);
+    color: #f8dfb2 !important;
   }
 
   .font-body {

@@ -7,33 +7,36 @@ import artistPortrait from "@/assets/artist-portrait.png";
 
 const About = () => {
   useEffect(() => { document.title = "About — Kamakshi Kaur"; return () => { document.title = "Kamakshi Kaur"; }; }, []);
-  const portraitRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
-    target: portraitRef,
+    target: containerRef,
     offset: ["start end", "end start"],
   });
-  const portraitY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const portraitScale = useTransform(scrollYProgress, [0, 1], [1, 1.04]);
+  // Subtle parallax effect on the image
+  const portraitY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
+  const portraitScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
 
   return (
     <PageTransition>
-      <div className="pt-32 md:pt-40 pb-24 px-8 md:px-16">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start">
-          {/* Portrait with parallax */}
-          <FadeInView className="order-2 md:order-1">
-            <div ref={portraitRef} className="aspect-[3/4] overflow-hidden">
-              <motion.div style={{ y: portraitY, scale: portraitScale }} className="w-full h-full">
-                <ProtectedImage
-                  src={artistPortrait}
-                  alt="The artist in their studio"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  width={1024}
-                  height={1280}
-                />
-              </motion.div>
-            </div>
-          </FadeInView>
+      <div className="pt-32 md:pt-40 pb-24 px-8 md:px-16" ref={containerRef}>
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start relative">
+          {/* Portrait with parallax — Sticky on desktop */}
+          <div className="order-2 md:order-1 md:sticky top-8 md:top-32 lg:top-40">
+            <FadeInView>
+              <div className="aspect-[3/4] overflow-hidden rounded-md">
+                <motion.div style={{ y: portraitY, scale: portraitScale }} className="w-full h-full">
+                  <ProtectedImage
+                    src={artistPortrait}
+                    alt="The artist in their studio"
+                    className="w-full h-full object-cover origin-center"
+                    loading="lazy"
+                    width={1024}
+                    height={1280}
+                  />
+                </motion.div>
+              </div>
+            </FadeInView>
+          </div>
 
           {/* Text */}
           <div className="order-1 md:order-2">
@@ -45,17 +48,16 @@ const About = () => {
 
             <FadeInView delay={0.2}>
               <p className="font-body text-xl leading-relaxed text-foreground/80 italic mb-10">
-                I don't paint what I see. I paint what I can't say.
+                I am creation, and creation is where I return to myself, to bliss.
               </p>
             </FadeInView>
 
             <FadeInView delay={0.35}>
+              <p className="font-body text-lg leading-relaxed text-foreground/60 mb-4">
+                My work begins in stillness, in moments where I turn inward and allow instinct to take the lead. It is less about making something seen, and more about responding to something felt, something that asks to take form without being fully understood.
+              </p>
               <p className="font-body text-lg leading-relaxed text-foreground/60 mb-8">
-                My work begins in silence — in the space between thought and
-                feeling, where language dissolves and something truer emerges.
-                Each canvas is a conversation with material: the resistance of
-                oil, the surrender of gold leaf, the patience of layered
-                pigment.
+                Trained in jewellery and product design at NIFT Gandhinagar, my practice is rooted in a sensitivity to form, material, and detail. Yet, my approach to art moves beyond structure. It is guided by curiosity, by an ongoing dialogue between control and surrender, and by a deep interest in how inner experiences take shape in the physical world.
               </p>
             </FadeInView>
 
@@ -67,12 +69,14 @@ const About = () => {
               <h2 className="font-heading text-xs tracking-[0.3em] uppercase text-secondary/90 mb-6 font-normal">
                 Philosophy
               </h2>
+              <p className="font-body text-lg leading-relaxed text-foreground/95 mb-4">
+                I think of an ever-watchful eye within us, a conscious presence shaped by memory, conditioning, and the silent influence of the world around us. It observes, corrects, and slowly begins to define how we exist. Alongside it flows another awareness, quieter and instinctive, a raw current that does not seek approval, only expression.
+              </p>
+              <p className="font-body text-lg leading-relaxed text-foreground/95 mb-4">
+                My work exists in the tension between these two states. In response to being seen and to seeing ourselves, we begin to form subtle masks, not visible, but deeply lived and quietly embodied. These layers shape how we express, what we conceal, and what we allow to emerge.
+              </p>
               <p className="font-body text-lg leading-relaxed text-foreground/95 mb-8">
-                I believe art should not explain — it should resonate. Like a
-                half-remembered dream, a painting should leave you with a feeling
-                you can't quite name but recognize as deeply yours. My practice
-                is rooted in slowness, in the belief that beauty reveals itself
-                only to those willing to wait.
+                I see the body and mind as a vessel through which energy continuously passes. This pure force, <strong className="italic">prana</strong> (Sanskrit word for life force), flows through us. What we create is not the energy itself, but our interpretation of it, shaped by perception, memory, and experience. My practice seeks to hold that moment just before it is altered, where energy exists in its most unguarded and unformed state.
               </p>
             </FadeInView>
 
@@ -80,11 +84,14 @@ const About = () => {
               <h2 className="font-heading text-xs tracking-[0.3em] uppercase text-secondary/90 mb-6 font-normal">
                 Why I Create
               </h2>
+              <p className="font-body text-lg leading-relaxed text-foreground/95 mb-4">
+                I create because it is both a confession and a question.
+              </p>
+              <p className="font-body text-lg leading-relaxed text-foreground/95 mb-4">
+                It allows me to sit with what I do not fully understand, and to give form to thoughts that do not arrive as answers. Each work becomes an attempt to hold something in between, not to resolve it, but to witness it more clearly.
+              </p>
               <p className="font-body text-lg leading-relaxed text-foreground/95">
-                Because the body knows things the mind refuses. Because color can
-                hold grief and joy in the same breath. Because somewhere,
-                someone will stand before a canvas and feel less alone — and that
-                is enough.
+                In that process, I find a way to respond to what moves within me, even when it cannot be fully explained.
               </p>
             </FadeInView>
           </div>

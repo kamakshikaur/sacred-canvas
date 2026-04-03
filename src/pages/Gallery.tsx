@@ -135,8 +135,6 @@ const Gallery = () => {
                     <p className="gallery-card__medium">{work.medium}</p>
                     <div className="gallery-card__meta">
                       <span>{work.dimensions}</span>
-                      <span className="gallery-card__dot">·</span>
-                      <span>{work.year}</span>
                     </div>
                   </div>
 
@@ -184,7 +182,6 @@ const Gallery = () => {
                   </div>
                   <div className="gallery-list-item__right">
                     <span className="gallery-list-item__dims">{work.dimensions}</span>
-                    <span className="gallery-list-item__year">{work.year}</span>
                   </div>
                   <div className="gallery-list-item__arrow">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -300,14 +297,10 @@ const Gallery = () => {
                   <span className="gallery-lightbox__label">Dimensions</span>
                   <span className="gallery-lightbox__value">{selectedWork.dimensions}</span>
                 </div>
-                <div className="gallery-lightbox__field">
-                  <span className="gallery-lightbox__label">Year</span>
-                  <span className="gallery-lightbox__value">{selectedWork.year}</span>
-                </div>
 
                 <div className="gallery-lightbox__divider" />
 
-                <p className="gallery-lightbox__meaning">{selectedWork.meaning}</p>
+                <p className="gallery-lightbox__meaning">{selectedWork.artistReflection}</p>
 
                 <Link
                   to={`/works/${selectedWork.id}`}

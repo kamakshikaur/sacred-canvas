@@ -6,7 +6,8 @@ import FadeInView from "@/components/FadeInView";
 import ProtectedImage from "@/components/ProtectedImage";
 import TiltCard from "@/components/TiltCard";
 import MagneticButton from "@/components/MagneticButton";
-import heroEye from "@/assets/hero-eye.png";
+import heroEye from "@/assets/hero-eye-new.png";
+import heroBg from "@/assets/hero-bg.png";
 import { artworks } from "@/data/artworks";
 
 const Index = () => {
@@ -36,7 +37,21 @@ const Index = () => {
     <PageTransition>
       {/* Eye-zoom hero */}
       <div ref={heroRef} className="relative h-[250vh]">
-        <div className="sticky top-0 h-screen overflow-hidden">
+        <div className="sticky top-0 h-screen overflow-hidden bg-[#0a0202]">
+          {/* Textured background image */}
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <img 
+              src={heroBg} 
+              alt="" 
+              className="w-full h-full object-cover opacity-80" 
+            />
+            {/* Vignette to blend the edges into the dark theme */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_#0a0202_100%)] opacity-90" />
+          </div>
+
+          {/* Warm red-black glow behind the eye */}
+          <div className="absolute inset-0 z-0 pointer-events-none bg-[radial-gradient(circle_at_center,_#180303_0%,_transparent_60%)]" />
+          
           {/* The Eye */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center will-change-transform"
@@ -47,11 +62,13 @@ const Index = () => {
             }}
             transition={{ duration: 7, ease: "easeInOut", repeat: Infinity }}
           >
-            <ProtectedImage
-              src={heroEye}
-              alt="Ornate golden eye — enter the art space of Kamakshi Kaur"
-              className="w-[55vmin] h-[55vmin] object-cover rounded-full shadow-[0_0_100px_rgba(103,0,17,0.4)]"
-            />
+            <div className="w-[55vmin] h-[55vmin] rounded-full shadow-[0_0_120px_rgba(103,0,17,0.95)] bg-transparent flex items-center justify-center relative overflow-hidden">
+              <ProtectedImage
+                src={heroEye}
+                alt="Ornate golden eye — enter the art space of Kamakshi Kaur"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </motion.div>
 
           {/* Title — "Step Inside" */}
@@ -81,20 +98,27 @@ const Index = () => {
             </span>
           </motion.div>
 
-          {/* Bottom gradient — eliminates the harsh horizontal cut */}
           <div 
             className="absolute bottom-0 left-0 right-0 h-40 z-20 pointer-events-none"
-            style={{ background: "linear-gradient(to bottom, transparent, #0a0505)" }}
+            style={{ background: "linear-gradient(to bottom, transparent, hsl(var(--background)))" }}
           />
         </div>
       </div>
 
-      {/* Artist quote — overlaps upward with glass effect, text is lowered for spacing */}
-      <section className="relative -mt-24 pt-44 pb-32 md:pb-40 px-8 z-10 backdrop-blur-2xl bg-black/30 w-full rounded-t-[2rem] shadow-[0_-30px_60px_rgba(0,0,0,0.5)]">
+      {/* Artist quote — overlaps upward with seamless glass effect */}
+      <section className="relative -mt-24 pt-44 pb-32 md:pb-40 px-8 z-10 w-full">
+        {/* Soft fading glass background */}
+        <div 
+          className="absolute inset-0 backdrop-blur-2xl bg-black/30 pointer-events-none -z-10"
+          style={{
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)"
+          }}
+        />
         <div className="max-w-4xl mx-auto text-center">
           <FadeInView>
             <p 
-              className="font-heading text-3xl md:text-5xl leading-relaxed italic text-foreground tracking-wide"
+              className="font-heading text-3xl md:text-5xl leading-relaxed italic text-[#f8dfb2] tracking-wide"
             >
               "What is created completes within you."
             </p>
