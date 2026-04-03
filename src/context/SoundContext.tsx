@@ -19,6 +19,43 @@ interface SoundContextType {
 
 const SoundContext = createContext<SoundContextType | undefined>(undefined);
 
+// ── Window-scoped singleton for ambient audio ──
+// Using `window` instead of a module-level variable because Vite HMR
+// re-executes modules, resetting module-level variables to their initial
+// values while the old Audio object keeps playing in memory.  This causes
+// duplicate audio instances that layer on top of each other.
+// `window` persists across HMR cycles, so we can always find the
+// existing Audio and reuse it instead of creating a duplicate.
+
+declare global {
+  interface Window {
+    __ambientAudio?: HTMLAudioElement;
+    __ambientUnlocked?: boolean;
+  }
+}
+
+function getAmbientAudio(volume: number): HTMLAudioElement {
+  if (!window.__ambientAudio) {
+    window.__ambientAudio = new Audio(ambientMusicUrl);
+    window.__ambientAudio.loop = true;
+    window.__ambientAudio.volume = volume;
+  }
+  return window.__ambientAudio;
+}
+
+// Clean up during Vite HMR so the old module's audio stops before the
+// new module creates a fresh instance.
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    if (window.__ambientAudio) {
+      window.__ambientAudio.pause();
+      window.__ambientAudio.src = "";
+      window.__ambientAudio = undefined;
+      window.__ambientUnlocked = false;
+    }
+  });
+}
+
 export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
   // We want the ambient music to play by default (unmuted).
   const [isMuted, setIsMuted] = useState(false);
@@ -36,10 +73,10 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
 
   // --- AMBIENT VOLUME CONSTANTS ---
   const NORMAL_VOL = 0.08; 
-  const DUCKED_VOL = 0.02; // Slightly higher for better balance
+  const DUCKED_VOL = 0.02;
   const FADE_STEP = 0.005;
 
-  // Track time
+  // Track voiceover time
   useEffect(() => {
     const updateTime = () => {
       if (voiceoverAudioRef.current && isVoiceoverPlaying) {
@@ -78,29 +115,29 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
           ambientAudioRef.current.volume = Math.max(current - FADE_STEP, targetVolume);
         }
       }
-    }, 50); // Small interval for smooth fade
+    }, 50);
   };
 
-  // Mount logic - setup ambient auto-play
+  // Mount logic – reuse the window-scoped singleton; never re-create it.
   useEffect(() => {
-    const ambient = new Audio(ambientMusicUrl);
-    ambient.loop = true;
-    ambient.volume = NORMAL_VOL;
+    const ambient = getAmbientAudio(NORMAL_VOL);
     ambientAudioRef.current = ambient;
     
+    // Only try to play if actually paused (prevents restart)
     const tryAutoplay = () => {
-      if (!isMuted && ambientAudioRef.current) {
-        ambientAudioRef.current.play().catch((e) => {
-          // Browser autoplay policy blocked it; we just wait for the user to interact
-          console.log("Autoplay blocked, waiting for interaction", e);
+      if (!isMuted && ambientAudioRef.current && ambientAudioRef.current.paused) {
+        ambientAudioRef.current.play().catch(() => {
+          // Browser autoplay policy blocked — wait for user interaction
         });
       }
     };
 
     tryAutoplay();
 
-    // Attach to first interaction to bypass autoplay restrictions if needed
+    // First-interaction unlock for browsers that block autoplay
     const unlockAudio = () => {
+      if (window.__ambientUnlocked) return;
+      window.__ambientUnlocked = true;
       if (!isMuted && ambientAudioRef.current && ambientAudioRef.current.paused) {
         ambientAudioRef.current.play().catch(() => {});
       }
@@ -108,13 +145,15 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
       document.removeEventListener('touchstart', unlockAudio);
     };
 
-    document.addEventListener('click', unlockAudio);
-    document.addEventListener('touchstart', unlockAudio);
+    if (!window.__ambientUnlocked) {
+      document.addEventListener('click', unlockAudio);
+      document.addEventListener('touchstart', unlockAudio);
+    }
 
     return () => {
       document.removeEventListener('click', unlockAudio);
       document.removeEventListener('touchstart', unlockAudio);
-      ambientAudioRef.current?.pause();
+      // Do NOT pause ambient on cleanup — the singleton persists.
       voiceoverAudioRef.current?.pause();
       if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
       if (duckingTimeoutRef.current) clearTimeout(duckingTimeoutRef.current);

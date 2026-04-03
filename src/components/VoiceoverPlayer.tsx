@@ -17,11 +17,11 @@ const VoiceoverPlayer = () => {
   } = useSound();
 
   return (
-    <div className="fixed bottom-8 right-8 md:bottom-12 md:right-12 z-[105] flex items-center gap-4 bg-background/70 backdrop-blur-xl px-5 py-3 md:px-6 md:py-4 rounded-full border border-foreground/10 shadow-2xl transition-all duration-500 hover:bg-background/90 hover:border-foreground/30">
+    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-max md:bottom-12 md:left-auto md:right-12 md:translate-x-0 z-[105] flex items-center gap-4 bg-background/70 backdrop-blur-xl px-5 py-3 md:px-6 md:py-4 rounded-full border border-foreground/10 shadow-2xl transition-all duration-500 hover:bg-background/90 hover:border-foreground/30">
       
       {/* Voiceover Controls (Only shown if an artwork is currently active) */}
       {activeVoiceover && (
-        <div className="flex items-center gap-4 border-r border-foreground/10 pr-4">
+        <div className="flex items-center gap-2 sm:gap-4 border-r border-foreground/10 pr-3 sm:pr-4">
           <button 
             onClick={isVoiceoverPlaying ? pauseVoiceover : resumeVoiceover}
             className="flex items-center gap-3 text-foreground/80 hover:text-foreground transition-colors duration-300 pointer-events-auto"

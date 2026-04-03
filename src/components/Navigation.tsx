@@ -3,11 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 import MagneticButton from "@/components/MagneticButton";
+import { useUI } from "@/context/UIContext";
 
 const navLinks = [
-  { to: "/", label: "Home" },
   { to: "/works", label: "Works" },
-  { to: "/gallery", label: "Gallery" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ];
@@ -15,6 +14,7 @@ const navLinks = [
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { isGalleryOpen, toggleGallery } = useUI();
 
   const [mounted, setMounted] = useState(false);
 
@@ -50,9 +50,17 @@ const Navigation = () => {
                   </Link>
                 </MagneticButton>
               ))}
+              <MagneticButton pull={30}>
+                <button
+                  onClick={toggleGallery}
+                  className={`font-body text-sm tracking-[0.15em] uppercase slow-transition hover:opacity-60 rounded-none shadow-none ${
+                    isGalleryOpen ? "text-secondary" : "text-muted-foreground"
+                  }`}
+                >
+                  {isGalleryOpen ? "Close Gallery" : "Gallery View"}
+                </button>
+              </MagneticButton>
             </div>
-
-
 
             {/* Mobile menu button */}
             <button
@@ -109,6 +117,24 @@ const Navigation = () => {
                 </Link>
               </motion.div>
             ))}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ delay: navLinks.length * 0.12, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  toggleGallery();
+                }}
+                className={`font-heading text-3xl tracking-[0.15em] hover:text-primary slow-transition ${
+                  isGalleryOpen ? "text-secondary" : "text-foreground"
+                }`}
+              >
+                {isGalleryOpen ? "Close Gallery" : "Gallery View"}
+              </button>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

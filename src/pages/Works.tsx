@@ -8,14 +8,29 @@ import ProtectedImage from "@/components/ProtectedImage";
 import MagneticButton from "@/components/MagneticButton";
 import { artworks } from "@/data/artworks";
 import portfolioCover from "@/assets/portfolio-cover.png";
+import { useUI } from "@/context/UIContext";
 
 const Works = () => {
   useEffect(() => {
     document.title = "Kamakshi Kaur";
   }, []);
 
+  const { toggleGallery } = useUI();
+  const { scrollYProgress } = useScroll();
+
   return (
     <PageTransition>
+      {/* ═══ PAGE PROGRESS BAR ═══ */}
+      <div className="fixed bottom-0 left-0 right-0 h-16 flex items-end z-[90] pointer-events-none backdrop-blur-md bg-gradient-to-t from-background/50 to-transparent" style={{ WebkitMaskImage: 'linear-gradient(to right, black, transparent 95%)' }}>
+        <motion.div
+          className="h-[1px] w-full origin-left mb-4"
+          style={{ 
+            scaleX: scrollYProgress, 
+            background: "linear-gradient(to right, hsl(38 60% 50% / 0.5), hsl(38 100% 84% / 0.8))" 
+          }}
+        />
+      </div>
+
       {/* ═══ HERO BANNER ═══ */}
       <WorksHero />
 
@@ -65,9 +80,9 @@ const Works = () => {
       <FadeInView delay={0.05}>
         <div className="works-gallery-cta">
           <MagneticButton pull={30}>
-            <Link to="/gallery" className="works-gallery-cta__link">
+            <button onClick={toggleGallery} className="works-gallery-cta__link">
               View All in Gallery →
-            </Link>
+            </button>
           </MagneticButton>
         </div>
       </FadeInView>
@@ -78,13 +93,13 @@ const Works = () => {
 /* ── Hero Banner ── */
 const WorksHero = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
+  const { scrollYProgress: heroScrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const lineScale = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+  const titleY = useTransform(heroScrollYProgress, [0, 0.15], [0, 100]);
+  const titleOpacity = useTransform(heroScrollYProgress, [0, 0.08], [1, 0]);
+  const lineScale = useTransform(heroScrollYProgress, [0, 0.5], [0, 1]);
 
   return (
     <div ref={ref} className="works-hero">
@@ -124,12 +139,15 @@ const WorksHero = () => {
 
       {/* Subtle scroll cue */}
       <motion.div
-        className="works-hero__scroll"
+        className="works-hero__scroll flex flex-col items-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.35 }}
         transition={{ delay: 2, duration: 1.5 }}
       >
         <div className="works-hero__scroll-line" />
+        <span className="font-body text-[9px] tracking-[0.3em] uppercase text-muted-foreground mt-2">
+          Scroll
+        </span>
       </motion.div>
     </div>
   );

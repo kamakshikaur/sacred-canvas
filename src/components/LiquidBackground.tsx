@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * LiquidBackground — Dynamic copper/crimson environment that breathes with the cursor.
@@ -6,8 +6,20 @@ import { useEffect, useRef } from "react";
  */
 const LiquidBackground = () => {
   const bgRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let currentX = mouseX;
@@ -22,19 +34,13 @@ const LiquidBackground = () => {
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     const animate = () => {
-      // Smooth interpolation for the light (increased speed)
       currentX += (mouseX - currentX) * 0.25;
       currentY += (mouseY - currentY) * 0.25;
 
       if (bgRef.current) {
-        // Convert to percentages for gradient positioning
         const xPercent = (currentX / window.innerWidth) * 100;
         const yPercent = (currentY / window.innerHeight) * 100;
 
-        // Dynamic gradient:
-        // 1. A copper/gold highlight that closely follows the mouse
-        // 2. A subtle deep crimson shift taking the opposite direction
-        // 3. A dark, rich base color
         bgRef.current.style.background = `
           radial-gradient(circle at ${xPercent}% ${yPercent}%, hsla(25, 45%, 15%, 0.8) 0%, transparent 40%),
           radial-gradient(ellipse at ${100 - xPercent * 0.3}% ${100 - yPercent * 0.3}%, hsla(350, 80%, 10%, 0.9) 0%, transparent 60%),
@@ -48,9 +54,9 @@ const LiquidBackground = () => {
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none bg-[#0a0505]" aria-hidden="true">

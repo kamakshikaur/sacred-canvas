@@ -63,9 +63,11 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  height: 100px;
+  height: 120px;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .works-hero__scroll-line {
@@ -144,11 +146,13 @@
   filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.5));
   transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
               filter 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  animation: gentle-breathe 4s ease-in-out infinite alternate;
 }
 
 .works-room__painting-link:hover .works-room__painting {
-  transform: scale(1.02);
-  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.7)) brightness(1.03);
+  animation-play-state: paused;
+  transform: scale(1.02) !important;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.7)) brightness(1.03) !important;
 }
 
 .works-room__glow {

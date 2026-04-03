@@ -7,9 +7,7 @@ import { useEffect, useRef } from "react";
  */
 const InteractiveCursor = () => {
   const dotRef = useRef<HTMLDivElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
   const posRef = useRef({ x: -100, y: -100 });
-  const smoothRef = useRef({ x: -100, y: -100 });
   const hoveringRef = useRef(false);
   const rafRef = useRef<number>(0);
 
@@ -33,28 +31,14 @@ const InteractiveCursor = () => {
 
     const onLeave = () => {
       posRef.current = { x: -100, y: -100 };
-      smoothRef.current = { x: -100, y: -100 };
     };
 
     // Animation loop — runs outside React, directly mutating DOM
     const tick = () => {
-      const lerp = 0.15;
-      smoothRef.current.x += (posRef.current.x - smoothRef.current.x) * lerp;
-      smoothRef.current.y += (posRef.current.y - smoothRef.current.y) * lerp;
-
       if (dotRef.current) {
         dotRef.current.style.transform = `translate(${posRef.current.x - 4}px, ${posRef.current.y - 4}px)`;
         dotRef.current.style.opacity = hoveringRef.current ? "0" : "1";
       }
-
-      if (glowRef.current) {
-        const size = hoveringRef.current ? 48 : 28;
-        glowRef.current.style.transform = `translate(${smoothRef.current.x - size / 2}px, ${smoothRef.current.y - size / 2}px)`;
-        glowRef.current.style.width = `${size}px`;
-        glowRef.current.style.height = `${size}px`;
-        glowRef.current.style.opacity = hoveringRef.current ? "0.6" : "0.35";
-      }
-
       rafRef.current = requestAnimationFrame(tick);
     };
 

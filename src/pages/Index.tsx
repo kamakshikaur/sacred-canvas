@@ -4,7 +4,6 @@ import { useRef, useEffect } from "react";
 import PageTransition from "@/components/PageTransition";
 import FadeInView from "@/components/FadeInView";
 import ProtectedImage from "@/components/ProtectedImage";
-import TiltCard from "@/components/TiltCard";
 import MagneticButton from "@/components/MagneticButton";
 import heroEye from "@/assets/hero-eye-new.png";
 import heroBg from "@/assets/hero-bg.png";
@@ -123,16 +122,6 @@ const Index = () => {
               "What is created completes within you."
             </p>
           </FadeInView>
-          <FadeInView delay={0.15} className="mt-16">
-            <MagneticButton>
-              <Link
-                to="/works"
-                className="px-8 py-3 border border-foreground/20 font-body text-sm tracking-[0.2em] uppercase text-foreground/70 hover:text-foreground hover:border-primary/60 slow-transition"
-              >
-                View Works
-              </Link>
-            </MagneticButton>
-          </FadeInView>
         </div>
       </section>
 
@@ -157,7 +146,7 @@ const Index = () => {
                       loading="lazy"
                     />
                   </div>
-                  <div className="mt-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 antialiased">
+                  <div className="mt-6 text-center opacity-90 group-hover:opacity-100 transition-opacity duration-700 antialiased">
                     <h3 className="font-heading text-xl font-medium tracking-wide text-secondary/95 group-hover:italic transition-all duration-500">
                       {work.title}
                     </h3>

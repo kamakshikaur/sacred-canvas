@@ -6,6 +6,7 @@ import PageTransition from "@/components/PageTransition";
 import FadeInView from "@/components/FadeInView";
 import ArtworkGallery from "@/components/ArtworkGallery";
 import { useSound } from "@/context/SoundContext";
+import { useUI } from "@/context/UIContext";
 import ProtectedImage from "@/components/ProtectedImage";
 import { artworks } from "@/data/artworks";
 import MagneticButton from "@/components/MagneticButton";
@@ -14,6 +15,7 @@ const ArtworkDetail = () => {
   const { id } = useParams();
   const artwork = artworks.find((a) => a.id === id);
   const [galleryOpen, setGalleryOpen] = useState(false);
+  const { toggleGallery } = useUI();
 
   const currentIndex = artworks.findIndex((a) => a.id === id);
   const prevArtwork = currentIndex > 0 ? artworks[currentIndex - 1] : null;
@@ -108,7 +110,7 @@ const ArtworkDetail = () => {
             className="ad-hero__click-hint"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2, duration: 1.5 }}
+            transition={{ delay: 0.8, duration: 1.2 }}
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path d="M3 3L17 17M17 3L3 17" stroke="currentColor" strokeWidth="0.8" opacity="0.4"/>
@@ -141,15 +143,7 @@ const ArtworkDetail = () => {
           )}
         </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          className="ad-hero__scroll-cue"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.5 }}
-          transition={{ delay: 2.5, duration: 1.5 }}
-        >
-          <div className="ad-hero__scroll-line" />
-        </motion.div>
+        {/* Scroll indicator removed per user request */}
       </div>
 
       {/* ═══ DETAILS SECTION: Editorial split layout ═══ */}
@@ -256,9 +250,9 @@ const ArtworkDetail = () => {
 
             <div className="ad-nav__center">
               <MagneticButton pull={25}>
-                <Link to="/gallery" className="ad-nav__gallery-link">
-                  Gallery
-                </Link>
+                <button onClick={toggleGallery} className="ad-nav__gallery-link">
+                  Gallery View
+                </button>
               </MagneticButton>
             </div>
 
