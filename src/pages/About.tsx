@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import FadeInView from "@/components/FadeInView";
 import ProtectedImage from "@/components/ProtectedImage";
@@ -24,7 +24,7 @@ const About = () => {
           <div className="order-2 md:order-1 md:sticky top-8 md:top-32 lg:top-40">
             <FadeInView>
               <div className="aspect-[3/4] overflow-hidden rounded-md">
-                <motion.div style={{ y: portraitY, scale: portraitScale }} className="w-full h-full">
+                <m.div style={{ y: portraitY, scale: portraitScale }} className="w-full h-full">
                   <ProtectedImage
                     src={artistPortrait}
                     alt="The artist in their studio"
@@ -33,7 +33,7 @@ const About = () => {
                     width={1024}
                     height={1280}
                   />
-                </motion.div>
+                </m.div>
               </div>
             </FadeInView>
           </div>

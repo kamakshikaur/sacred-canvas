@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
 import PageTransition from "@/components/PageTransition";
 import FadeInView from "@/components/FadeInView";
@@ -52,7 +52,7 @@ const Index = () => {
           <div className="absolute inset-0 z-0 pointer-events-none bg-[radial-gradient(circle_at_center,_#180303_0%,_transparent_60%)]" />
           
           {/* The Eye */}
-          <motion.div
+          <m.div
             className="absolute inset-0 flex items-center justify-center will-change-transform"
             style={{ scale: eyeScale, opacity: eyeOpacity, rotate: eyeRotate }}
             animate={{ 
@@ -68,14 +68,14 @@ const Index = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Title — "Step Inside" */}
-          <motion.div
+          <m.div
             className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none"
             style={{ opacity: titleOpacity, y: titleY, filter: titleBlur }}
           >
-            <motion.h1 
+            <m.h1 
               initial={{ letterSpacing: "0.05em", filter: "blur(15px)", opacity: 0, scale: 0.95 }}
               animate={{ letterSpacing: "0.2em", filter: "blur(0px)", opacity: 0.95, scale: 1 }}
               transition={{ duration: 3, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
@@ -83,11 +83,11 @@ const Index = () => {
               style={{ textShadow: "0px 0px 40px rgba(255,160,100,0.6)" }}
             >
               Step Inside
-            </motion.h1>
-          </motion.div>
+            </m.h1>
+          </m.div>
 
           {/* Scroll indicator */}
-          <motion.div
+          <m.div
             className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10"
             style={{ opacity: scrollHintOpacity }}
           >
@@ -95,7 +95,7 @@ const Index = () => {
             <span className="font-body text-xs tracking-[0.3em] uppercase text-muted-foreground">
               Scroll
             </span>
-          </motion.div>
+          </m.div>
 
         </div>
       </div>
@@ -137,7 +137,7 @@ const Index = () => {
                     <ProtectedImage
                       src={work.image}
                       alt={work.title}
-                      className="relative w-full h-auto object-contain transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:scale-[1.02] group-hover:drop-shadow-[0_40px_70px_rgba(255,20,40,0.8)] group-hover:-translate-y-2"
+                      className="relative w-full h-auto object-contain transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:scale-[1.02] group-hover:drop-shadow-[0_0_80px_rgba(103,0,17,0.95)] group-hover:-translate-y-2"
                       style={{ transitionProperty: "transform, filter" }}
                       loading="lazy"
                     />

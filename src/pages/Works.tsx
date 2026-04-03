@@ -1,7 +1,7 @@
 import "./Works.css";
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import FadeInView from "@/components/FadeInView";
 import ProtectedImage from "@/components/ProtectedImage";
@@ -22,7 +22,7 @@ const Works = () => {
     <PageTransition>
       {/* ═══ PAGE PROGRESS BAR ═══ */}
       <div className="fixed bottom-0 left-0 right-0 h-16 flex items-end z-[90] pointer-events-none backdrop-blur-md bg-gradient-to-t from-background/50 to-transparent" style={{ WebkitMaskImage: 'linear-gradient(to right, black, transparent 95%)' }}>
-        <motion.div
+        <m.div
           className="h-[1px] w-full origin-left mb-4"
           style={{ 
             scaleX: scrollYProgress, 
@@ -103,42 +103,42 @@ const WorksHero = () => {
 
   return (
     <div ref={ref} className="works-hero">
-      <motion.div
+      <m.div
         className="works-hero__content"
         style={{ y: titleY, opacity: titleOpacity }}
       >
-        <motion.div
+        <m.div
           className="works-hero__line"
           style={{ scaleX: lineScale, transformOrigin: "left" }}
         />
-        <motion.h1
+        <m.h1
           className="works-hero__title"
           initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
           animate={{ opacity: 0.9, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1], delay: 0.3 }}
         >
           Works
-        </motion.h1>
-        <motion.p
+        </m.h1>
+        <m.p
           className="works-hero__quote"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 0.7, y: 0 }}
           transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1], delay: 0.8 }}
         >
           "Meant to be felt, as much as seen."
-        </motion.p>
-        <motion.div
+        </m.p>
+        <m.div
           className="works-hero__count"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.4 }}
           transition={{ delay: 1.2, duration: 1 }}
         >
           {artworks.length} Works
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
 
       {/* Subtle scroll cue */}
-      <motion.div
+      <m.div
         className="works-hero__scroll flex flex-col items-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.35 }}
@@ -148,7 +148,7 @@ const WorksHero = () => {
         <span className="font-body text-[9px] tracking-[0.3em] uppercase text-muted-foreground mt-2">
           Scroll
         </span>
-      </motion.div>
+      </m.div>
     </div>
   );
 };
@@ -181,7 +181,7 @@ const ArtworkRoom = ({ work, index }: ArtworkRoomProps) => {
       {/* Background number removed as requested */}
 
       {/* Painting side */}
-      <motion.div className="works-room__painting-col" style={{ y: paintingY }}>
+      <m.div className="works-room__painting-col" style={{ y: paintingY }}>
         <Link to={`/works/${work.id}`} className="works-room__painting-link group">
           <div className="works-room__painting-frame">
             <ProtectedImage
@@ -194,10 +194,10 @@ const ArtworkRoom = ({ work, index }: ArtworkRoomProps) => {
             <div className="works-room__glow" />
           </div>
         </Link>
-      </motion.div>
+      </m.div>
 
       {/* Info side */}
-      <motion.div className="works-room__info-col" style={{ y: textY }}>
+      <m.div className="works-room__info-col" style={{ y: textY }}>
         <FadeInView delay={0.1}>
           <div className="works-room__info">
             <Link to={`/works/${work.id}`} className="works-room__title-link">
@@ -229,7 +229,7 @@ const ArtworkRoom = ({ work, index }: ArtworkRoomProps) => {
             </MagneticButton>
           </div>
         </FadeInView>
-      </motion.div>
+      </m.div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import "./ArtworkDetail.css";
 import { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import FadeInView from "@/components/FadeInView";
 import ArtworkGallery from "@/components/ArtworkGallery";
@@ -89,12 +89,12 @@ const ArtworkDetail = () => {
         </div>
 
         {/* Painting with parallax */}
-        <motion.div
+        <m.div
           className="ad-hero__painting-wrap"
           style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
           onClick={() => setGalleryOpen(true)}
         >
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 1.06 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 2.2, ease: [0.25, 0.1, 0.25, 1] }}
@@ -104,9 +104,9 @@ const ArtworkDetail = () => {
               alt={artwork.title}
               className="ad-hero__painting"
             />
-          </motion.div>
+          </m.div>
           {/* Click hint */}
-          <motion.div
+          <m.div
             className="ad-hero__click-hint"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -117,11 +117,11 @@ const ArtworkDetail = () => {
               <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="0.8" opacity="0.4"/>
             </svg>
             <span>Click to expand</span>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
 
         {/* Dark gradient overlay that intensifies on scroll */}
-        <motion.div
+        <m.div
           className="ad-hero__overlay"
           style={{ opacity: overlayOpacity }}
         />
@@ -129,7 +129,7 @@ const ArtworkDetail = () => {
         {/* Artwork number removed */}
 
         {/* Title floating at bottom of hero */}
-        <motion.div
+        <m.div
           className="ad-hero__title-float"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -141,7 +141,7 @@ const ArtworkDetail = () => {
           {artwork.nativeTitle && (
             <span className="ad-hero__native">{artwork.nativeTitle}</span>
           )}
-        </motion.div>
+        </m.div>
 
         {/* Scroll indicator removed per user request */}
       </div>

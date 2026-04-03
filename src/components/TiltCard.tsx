@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { m, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ReactNode } from "react";
 
 interface TiltCardProps {
@@ -42,7 +42,7 @@ const TiltCard = ({ children, className = "", intensity = 15 }: TiltCardProps) =
   };
 
   return (
-    <motion.div
+    <m.div
       className={`relative ${className}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -53,7 +53,7 @@ const TiltCard = ({ children, className = "", intensity = 15 }: TiltCardProps) =
       }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 };
 

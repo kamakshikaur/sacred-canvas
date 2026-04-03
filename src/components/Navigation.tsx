@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 
 import MagneticButton from "@/components/MagneticButton";
 import { useUI } from "@/context/UIContext";
@@ -69,17 +69,17 @@ const Navigation = () => {
               aria-label="Toggle menu"
             >
               <div className="flex flex-col gap-1.5">
-                <motion.span
+                <m.span
                   animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
                   className="block w-6 h-px bg-foreground"
                   transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
                 />
-                <motion.span
+                <m.span
                   animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
                   className="block w-6 h-px bg-foreground"
                   transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
                 />
-                <motion.span
+                <m.span
                   animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
                   className="block w-6 h-px bg-foreground"
                   transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
@@ -93,7 +93,7 @@ const Navigation = () => {
       {/* Mobile menu overlay */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -101,7 +101,7 @@ const Navigation = () => {
             className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center gap-10"
           >
             {navLinks.map((link, i) => (
-              <motion.div
+              <m.div
                 key={link.to}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -115,9 +115,9 @@ const Navigation = () => {
                 >
                   {link.label}
                 </Link>
-              </motion.div>
+              </m.div>
             ))}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -134,8 +134,8 @@ const Navigation = () => {
               >
                 {isGalleryOpen ? "Close Gallery" : "Gallery View"}
               </button>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
     </>

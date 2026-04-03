@@ -1,7 +1,7 @@
 import "./GalleryOverlay.css";
 import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import FadeInView from "@/components/FadeInView";
 import ProtectedImage from "@/components/ProtectedImage";
 import { artworks, type Artwork } from "@/data/artworks";
@@ -67,7 +67,7 @@ const GalleryOverlay = () => {
   return (
     <AnimatePresence>
       {isGalleryOpen && (
-        <motion.div
+        <m.div
           className="fixed inset-0 z-[100] bg-background/70 backdrop-blur-xl overflow-y-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -238,7 +238,7 @@ const GalleryOverlay = () => {
           {/* ─── LIGHTBOX (Deep link) ─── */}
           <AnimatePresence>
             {selectedWork && (
-              <motion.div
+              <m.div
                 ref={lightboxRef}
                 className="gallery-lightbox !z-[110]"
                 initial={{ opacity: 0 }}
@@ -290,7 +290,7 @@ const GalleryOverlay = () => {
                 })()}
 
                 {/* Content */}
-                <motion.div
+                <m.div
                   key={selectedWork.id}
                   className="gallery-lightbox__content"
                   initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -343,11 +343,11 @@ const GalleryOverlay = () => {
                       Full Experience →
                     </button>
                   </div>
-                </motion.div>
-              </motion.div>
+                </m.div>
+              </m.div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

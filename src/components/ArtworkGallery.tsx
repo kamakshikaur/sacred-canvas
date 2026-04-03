@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import ProtectedImage from "@/components/ProtectedImage";
 
@@ -24,7 +24,7 @@ const ArtworkGallery = ({ images, title, isOpen, onClose }: ArtworkGalleryProps)
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
+        <m.div
           className="fixed inset-0 z-[100] flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -67,7 +67,7 @@ const ArtworkGallery = ({ images, title, isOpen, onClose }: ArtworkGalleryProps)
           )}
 
           {/* Image */}
-          <motion.div
+          <m.div
             className="relative z-10 max-w-[90vw] max-h-[85vh] flex items-center justify-center"
             key={current}
             initial={{ opacity: 0, scale: 0.97 }}
@@ -80,7 +80,7 @@ const ArtworkGallery = ({ images, title, isOpen, onClose }: ArtworkGalleryProps)
               alt={`${title} — view ${current + 1}`}
               className="max-w-full max-h-[85vh] object-contain"
             />
-          </motion.div>
+          </m.div>
 
           {/* Dots indicator */}
           {images.length > 1 && (
@@ -97,7 +97,7 @@ const ArtworkGallery = ({ images, title, isOpen, onClose }: ArtworkGalleryProps)
               ))}
             </div>
           )}
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );
