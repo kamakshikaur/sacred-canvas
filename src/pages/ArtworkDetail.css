@@ -500,17 +500,12 @@
 /* ═══════════════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════════════ */
+
+/* ── Tablet ── */
 @media (max-width: 900px) {
   .ad-hero__number {
     right: 1.5rem;
     font-size: 4rem;
-  }
-
-  .ad-hero__title-float {
-    left: 1.5rem;
-    bottom: 2.5rem;
-    flex-direction: column;
-    gap: 0.3rem;
   }
 
   .ad-hero__painting {
@@ -538,18 +533,136 @@
     gap: 1.25rem;
   }
 
+  /* Nav */
+  .ad-nav__link-thumb-wrap {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+/* ── Phone ── */
+@media (max-width: 600px) {
+  /* Hero adjustments */
+  .ad-hero {
+    height: 85vh;
+    min-height: 450px;
+  }
+
+  .ad-hero__painting-wrap {
+    padding: 1rem;
+  }
+
+  .ad-hero__painting {
+    max-height: 55vh;
+    max-width: 92vw;
+  }
+
+  .ad-hero__click-hint {
+    top: -1.8rem;
+    font-size: 0.6rem;
+    gap: 0.35rem;
+  }
+
+  .ad-hero__click-hint svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* ★ KEY FIX: Hide the hero's floating title on mobile —
+     the details section title (with pronunciation) is shown instead,
+     avoiding the duplicate title appearance */
+  .ad-hero__title-float {
+    display: none;
+  }
+
+  /* Details section — becomes the single source of truth for title */
+  .ad-details {
+    flex-direction: column;
+  }
+
+  .ad-details__left {
+    flex: none;
+    display: none;
+  }
+
+  .ad-details__right {
+    padding: 2rem 1.25rem 3rem;
+    min-height: auto;
+  }
+
+  /* Title block — more compact on phone */
+  .ad-details__title-block {
+    margin-bottom: 1.25rem;
+  }
+
+  .ad-details__title {
+    font-size: 2rem;
+    letter-spacing: 0.03em;
+  }
+
+  .ad-details__native {
+    font-size: 1.5rem;
+    margin-top: 0.2rem;
+  }
+
+  .ad-details__pronunciation {
+    font-size: 0.7rem;
+    margin-top: 0.4rem;
+  }
+
+  /* Metadata grid */
+  .ad-details__meta-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .ad-details__meta-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+  }
+
+  .ad-details__meta-value {
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  /* Quote / description */
   .ad-details__quote-block {
     padding-left: 1rem;
+    margin-bottom: 2rem;
   }
 
   .ad-details__quote-mark {
-    font-size: 3rem;
+    font-size: 2.5rem;
     left: -0.3rem;
+    top: -0.5rem;
   }
 
-  /* Nav */
+  .ad-details__description {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  /* Meaning / reflection */
+  .ad-details__meaning-block {
+    padding: 1.25rem;
+  }
+
+  .ad-details__meaning-label {
+    font-size: 0.55rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .ad-details__meaning {
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  /* Navigation: Prev/Next */
   .ad-nav {
-    padding: 3rem 1.5rem 4rem;
+    padding: 2rem 1.25rem 3rem;
   }
 
   .ad-nav__inner {
@@ -560,8 +673,9 @@
   }
 
   .ad-nav__link {
-    max-width: 40%;
+    max-width: 42%;
     width: auto;
+    gap: 0.75rem;
   }
 
   .ad-nav__link-thumb-wrap {
@@ -571,12 +685,25 @@
   .ad-nav__link-text {
     text-align: left !important;
   }
-  
+
   .ad-nav__link--next .ad-nav__link-text {
     text-align: right !important;
   }
-  
+
+  .ad-nav__link-label {
+    font-size: 0.6rem;
+  }
+
+  .ad-nav__link-title {
+    font-size: 0.95rem;
+  }
+
   .ad-nav__center {
-    display: none; /* Hide center button to save space, user can use top nav */
+    display: none;
+  }
+
+  .ad-nav__back-link {
+    font-size: 0.7rem;
+    padding: 0.5rem 1rem;
   }
 }

@@ -1,6 +1,6 @@
 import type { ImgHTMLAttributes } from "react";
 
-interface ProtectedImageProps extends ImgHTMLAttributes<HTMLImageElement> {}
+type ProtectedImageProps = ImgHTMLAttributes<HTMLImageElement>;
 
 const ProtectedImage = ({ className, style, ...props }: ProtectedImageProps) => (
   <div className="relative inline-block group/protected">

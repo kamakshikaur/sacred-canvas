@@ -23,11 +23,12 @@ const Index = () => {
   });
 
   // Eye zooms in — capped at 12x so the detail stays sharp, not a blurry mess
-  const eyeScale = useTransform(scrollYProgress, [0, 0.5, 0.9], [1, 3.5, 12]);
-  const eyeOpacity = useTransform(scrollYProgress, [0.5, 0.85], [1, 0]);
-  const eyeRotate = useTransform(scrollYProgress, [0, 0.9], [0, 45]);
+  const eyeScale = useTransform(scrollYProgress, [0, 0.4, 0.7], [1, 3.5, 12]);
+  const eyeOpacity = useTransform(scrollYProgress, [0.45, 0.7], [1, 0]);
+  const eyeRotate = useTransform(scrollYProgress, [0, 0.7], [0, 45]);
   
   const titleOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+  const titleDisplay = useTransform(scrollYProgress, (v) => v > 0.15 ? "none" : "flex");
   const titleY = useTransform(scrollYProgress, [0, 0.12], [0, -50]);
   const titleBlur = useTransform(scrollYProgress, [0, 0.1], ["blur(0px)", "blur(20px)"]);
   const scrollHintOpacity = useTransform(scrollYProgress, [0, 0.05], [0.4, 0]);
@@ -35,7 +36,7 @@ const Index = () => {
   return (
     <PageTransition>
       {/* Eye-zoom hero */}
-      <div ref={heroRef} className="relative h-[250vh]">
+      <div ref={heroRef} className="relative h-[200vh] md:h-[350vh]">
         <div className="sticky top-0 h-screen overflow-hidden bg-[#0a0202]">
           {/* Textured background image */}
           <div className="absolute inset-0 z-0 pointer-events-none">
@@ -72,8 +73,8 @@ const Index = () => {
 
           {/* Title — "Step Inside" */}
           <m.div
-            className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none"
-            style={{ opacity: titleOpacity, y: titleY, filter: titleBlur }}
+            className="absolute inset-0 flex-col items-center justify-center z-10 pointer-events-none"
+            style={{ display: titleDisplay, opacity: titleOpacity, y: titleY, filter: titleBlur }}
           >
             <m.h1 
               initial={{ letterSpacing: "0.05em", filter: "blur(15px)", opacity: 0, scale: 0.95 }}
@@ -101,7 +102,7 @@ const Index = () => {
       </div>
 
       {/* Artist quote — overlaps upward with seamless glass effect */}
-      <section className="relative -mt-20 pt-32 md:pt-44 pb-20 md:pb-40 px-6 md:px-8 z-10 w-full">
+      <section className="relative -mt-20 pt-20 md:pt-44 pb-12 md:pb-40 px-6 md:px-8 z-10 w-full">
         {/* Soft fading glass background */}
         <div 
           className="absolute inset-0 backdrop-blur-2xl bg-black/30 pointer-events-none -z-10"
@@ -113,7 +114,7 @@ const Index = () => {
         <div className="max-w-4xl mx-auto text-center">
           <FadeInView>
             <p 
-              className="font-heading text-3xl md:text-5xl leading-relaxed italic text-[#f8dfb2] tracking-wide"
+              className="font-heading text-2xl sm:text-3xl md:text-5xl leading-relaxed italic text-[#f8dfb2] tracking-wide"
             >
               "What is created completes within you."
             </p>
@@ -122,7 +123,7 @@ const Index = () => {
       </section>
 
       {/* Featured works */}
-      <section className="px-6 md:px-16 py-16 md:py-32">
+      <section className="px-4 sm:px-6 md:px-16 py-10 md:py-32">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-6 items-center">
           {featured.map((work, i) => {
             const layouts = [
@@ -134,6 +135,8 @@ const Index = () => {
               <FadeInView key={work.id} delay={i * 0.06} className={layouts[i]}>
                 <Link to={`/works/${work.id}`} className="block group artwork-item relative">
                   <div className="relative isolate flex justify-center items-center">
+                    {/* Ambient Glow */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_hsl(350_100%_15%_/_0.4)_0%,_transparent_65%)] z-[-1] pointer-events-none blur-[40px] scale-95" />
                     <ProtectedImage
                       src={work.image}
                       alt={work.title}
@@ -153,7 +156,7 @@ const Index = () => {
           })}
         </div>
 
-        <FadeInView delay={0.08} className="text-center mt-24">
+        <FadeInView delay={0.08} className="text-center mt-12 md:mt-24">
           <MagneticButton>
             <Link
               to="/works"

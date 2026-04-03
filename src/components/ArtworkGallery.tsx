@@ -40,7 +40,7 @@ const ArtworkGallery = ({ images, title, isOpen, onClose }: ArtworkGalleryProps)
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-6 right-6 z-10 text-foreground/50 hover:text-foreground slow-transition"
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 p-2 text-foreground/50 hover:text-foreground slow-transition"
             aria-label="Close gallery"
           >
             <X className="w-6 h-6" />
@@ -51,14 +51,14 @@ const ArtworkGallery = ({ images, title, isOpen, onClose }: ArtworkGalleryProps)
             <>
               <button
                 onClick={goPrev}
-                className="absolute left-6 md:left-12 z-10 text-foreground/30 hover:text-foreground/70 slow-transition"
+                className="absolute left-2 sm:left-6 md:left-12 z-10 p-2 text-foreground/30 hover:text-foreground/70 slow-transition"
                 aria-label="Previous image"
               >
                 <ChevronLeft className="w-8 h-8" />
               </button>
               <button
                 onClick={goNext}
-                className="absolute right-6 md:right-12 z-10 text-foreground/30 hover:text-foreground/70 slow-transition"
+                className="absolute right-2 sm:right-6 md:right-12 z-10 p-2 text-foreground/30 hover:text-foreground/70 slow-transition"
                 aria-label="Next image"
               >
                 <ChevronRight className="w-8 h-8" />
@@ -89,7 +89,7 @@ const ArtworkGallery = ({ images, title, isOpen, onClose }: ArtworkGalleryProps)
                 <button
                   key={i}
                   onClick={() => setCurrent(i)}
-                  className={`w-1.5 h-1.5 rounded-full slow-transition ${
+                  className={`w-2.5 h-2.5 sm:w-1.5 sm:h-1.5 rounded-full slow-transition p-0 min-w-[10px] min-h-[10px] ${
                     i === current ? "bg-foreground/60" : "bg-foreground/20"
                   }`}
                   aria-label={`View image ${i + 1}`}

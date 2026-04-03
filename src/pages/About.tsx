@@ -18,8 +18,8 @@ const About = () => {
 
   return (
     <PageTransition>
-      <div className="pt-24 md:pt-40 pb-16 md:pb-24 px-6 md:px-16" ref={containerRef}>
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start relative">
+      <div className="pt-20 md:pt-40 pb-12 md:pb-24 px-5 sm:px-6 md:px-16" ref={containerRef}>
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-24 items-start relative">
           {/* Portrait with parallax — Sticky on desktop */}
           <div className="order-2 md:order-1 md:sticky top-8 md:top-32 lg:top-40">
             <FadeInView>
@@ -56,7 +56,7 @@ const About = () => {
               <p className="font-body text-base md:text-lg leading-relaxed text-foreground/60 mb-4">
                 My work begins in stillness, in moments where I turn inward and allow instinct to take the lead. It is less about making something seen, and more about responding to something felt, something that asks to take form without being fully understood.
               </p>
-              <p className="font-body text-lg leading-relaxed text-foreground/60 mb-8">
+              <p className="font-body text-base md:text-lg leading-relaxed text-foreground/60 mb-8">
                 Trained in jewellery and product design at NIFT Gandhinagar, my practice is rooted in a sensitivity to form, material, and detail. Yet, my approach to art moves beyond structure. It is guided by curiosity, by an ongoing dialogue between control and surrender, and by a deep interest in how inner experiences take shape in the physical world.
               </p>
             </FadeInView>
@@ -69,13 +69,13 @@ const About = () => {
               <h2 className="font-heading text-xs tracking-[0.3em] uppercase text-secondary/90 mb-6 font-normal">
                 Philosophy
               </h2>
-              <p className="font-body text-lg leading-relaxed text-foreground/95 mb-4">
+              <p className="font-body text-base md:text-lg leading-relaxed text-foreground/95 mb-4">
                 I think of an ever-watchful eye within us, a conscious presence shaped by memory, conditioning, and the silent influence of the world around us. It observes, corrects, and slowly begins to define how we exist. Alongside it flows another awareness, quieter and instinctive, a raw current that does not seek approval, only expression.
               </p>
-              <p className="font-body text-lg leading-relaxed text-foreground/95 mb-4">
+              <p className="font-body text-base md:text-lg leading-relaxed text-foreground/95 mb-4">
                 My work exists in the tension between these two states. In response to being seen and to seeing ourselves, we begin to form subtle masks, not visible, but deeply lived and quietly embodied. These layers shape how we express, what we conceal, and what we allow to emerge.
               </p>
-              <p className="font-body text-lg leading-relaxed text-foreground/95 mb-8">
+              <p className="font-body text-base md:text-lg leading-relaxed text-foreground/95 mb-8">
                 I see the body and mind as a vessel through which energy continuously passes. This pure force, <strong className="italic">prana</strong> (Sanskrit word for life force), flows through us. What we create is not the energy itself, but our interpretation of it, shaped by perception, memory, and experience. My practice seeks to hold that moment just before it is altered, where energy exists in its most unguarded and unformed state.
               </p>
             </FadeInView>
@@ -84,13 +84,13 @@ const About = () => {
               <h2 className="font-heading text-xs tracking-[0.3em] uppercase text-secondary/90 mb-6 font-normal">
                 Why I Create
               </h2>
-              <p className="font-body text-lg leading-relaxed text-foreground/95 mb-4">
+              <p className="font-body text-base md:text-lg leading-relaxed text-foreground/95 mb-4">
                 I create because it is both a confession and a question.
               </p>
-              <p className="font-body text-lg leading-relaxed text-foreground/95 mb-4">
+              <p className="font-body text-base md:text-lg leading-relaxed text-foreground/95 mb-4">
                 It allows me to sit with what I do not fully understand, and to give form to thoughts that do not arrive as answers. Each work becomes an attempt to hold something in between, not to resolve it, but to witness it more clearly.
               </p>
-              <p className="font-body text-lg leading-relaxed text-foreground/95">
+              <p className="font-body text-base md:text-lg leading-relaxed text-foreground/95">
                 In that process, I find a way to respond to what moves within me, even when it cannot be fully explained.
               </p>
             </FadeInView>

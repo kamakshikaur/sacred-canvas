@@ -21,7 +21,7 @@ const Works = () => {
   return (
     <PageTransition>
       {/* ═══ PAGE PROGRESS BAR ═══ */}
-      <div className="fixed bottom-0 left-0 right-0 h-16 flex items-end z-[90] pointer-events-none backdrop-blur-md bg-gradient-to-t from-background/50 to-transparent" style={{ WebkitMaskImage: 'linear-gradient(to right, black, transparent 95%)' }}>
+      <div className="hidden md:flex fixed bottom-0 left-0 right-0 h-16 items-end z-[90] pointer-events-none backdrop-blur-md bg-gradient-to-t from-background/50 to-transparent" style={{ WebkitMaskImage: 'linear-gradient(to right, black, transparent 95%)' }}>
         <m.div
           className="h-[1px] w-full origin-left mb-4"
           style={{ 
@@ -171,7 +171,6 @@ const ArtworkRoom = ({ work, index }: ArtworkRoomProps) => {
   const textY = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   const isEven = index % 2 === 0;
-  const num = String(index + 1).padStart(2, "0");
 
   return (
     <div

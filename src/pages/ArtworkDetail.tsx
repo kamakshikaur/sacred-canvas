@@ -68,8 +68,6 @@ const ArtworkDetail = () => {
     );
   }
 
-  const artworkNumber = String(currentIndex + 1).padStart(2, "0");
-
   return (
     <PageTransition>
       <ArtworkGallery
@@ -94,6 +92,9 @@ const ArtworkDetail = () => {
           style={{ y: heroY, scale: heroScale, opacity: heroOpacity }}
           onClick={() => setGalleryOpen(true)}
         >
+          {/* Ambient Glow */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_hsl(350_100%_15%_/_0.5)_0%,_transparent_65%)] z-[-1] pointer-events-none blur-[40px] scale-105" />
+          
           <m.div
             initial={{ opacity: 0, scale: 1.06 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -151,6 +152,8 @@ const ArtworkDetail = () => {
         {/* Left column — sticky painting (desktop) */}
         <div className="ad-details__left">
           <div className="ad-details__sticky-image">
+            {/* Ambient Glow */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_hsl(350_100%_15%_/_0.4)_0%,_transparent_65%)] z-[-1] pointer-events-none blur-[30px]" />
             <ProtectedImage
               src={artwork.image}
               alt={artwork.title}

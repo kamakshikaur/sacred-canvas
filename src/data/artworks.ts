@@ -19,7 +19,6 @@ import voiceoverVichhora from "@/assets/voiceover-vichhora.m4a";
 import voiceoverSanjhiRooh from "@/assets/voiceover-sanjhi-rooh.m4a";
 import voiceoverDawning from "@/assets/voiceover-dawning.m4a";
 import voiceoverBesotted from "@/assets/voiceover-besotted.m4a";
-import voiceoverEmberAndGold from "@/assets/voiceover-ember-and-gold.m4a";
 
 export interface Artwork {
   id: string;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { m, AnimatePresence } from "framer-motion";
 
@@ -16,19 +16,15 @@ const Navigation = () => {
   const location = useLocation();
   const { isGalleryOpen, toggleGallery } = useUI();
 
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <>
       <nav className="fixed top-0 left-0 w-full z-50 mix-blend-difference">
-        <div className="flex items-center justify-between px-8 py-6 md:px-12 md:py-8">
+        <div className="flex items-center justify-between px-5 py-4 sm:px-8 sm:py-6 md:px-12 md:py-8">
           <Link
             to="/"
-            className="text-lg tracking-[0.2em] uppercase font-serif text-secondary"
+            className="text-base sm:text-lg tracking-[0.12em] sm:tracking-[0.2em] uppercase font-serif text-secondary"
           >
             Kamakshi Kaur
           </Link>

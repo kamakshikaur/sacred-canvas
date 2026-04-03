@@ -1,6 +1,6 @@
 import "./GalleryOverlay.css";
 import { useEffect, useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { m, AnimatePresence } from "framer-motion";
 import FadeInView from "@/components/FadeInView";
 import ProtectedImage from "@/components/ProtectedImage";
@@ -74,7 +74,7 @@ const GalleryOverlay = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          <div className="pt-28 md:pt-36 pb-24 px-6 md:px-12 lg:px-20 relative min-h-screen max-w-7xl mx-auto">
+          <div className="pt-20 sm:pt-28 md:pt-36 pb-16 sm:pb-24 px-4 sm:px-6 md:px-12 lg:px-20 relative min-h-screen max-w-7xl mx-auto">
             {/* Close button */}
             <button
               onClick={closeGallery}

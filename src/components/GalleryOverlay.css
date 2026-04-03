@@ -593,3 +593,107 @@
     align-items: flex-start;
   }
 }
+
+/* ── Phone lightbox ── */
+@media (max-width: 600px) {
+  .gallery-lightbox {
+    padding: 3.5rem 0.75rem 1.5rem;
+  }
+
+  .gallery-lightbox__close {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .gallery-lightbox__nav {
+    width: 40px;
+    height: 40px;
+    top: auto;
+    bottom: 1rem;
+    transform: none;
+  }
+
+  .gallery-lightbox__nav--prev { left: 1rem; }
+  .gallery-lightbox__nav--next { right: 1rem; }
+
+  .gallery-lightbox__image {
+    max-height: 45vh;
+  }
+
+  .gallery-lightbox__title {
+    font-size: 1.35rem;
+  }
+
+  .gallery-lightbox__native {
+    font-size: 1.2rem;
+  }
+
+  .gallery-lightbox__meaning {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .gallery-lightbox__value {
+    font-size: 0.9rem;
+  }
+
+  .gallery-lightbox__link {
+    font-size: 0.72rem;
+    padding: 0.5rem 1.25rem;
+  }
+
+  /* Gallery grid on phone */
+  .gallery-grid {
+    gap: 2rem;
+  }
+
+  .gallery-card__image {
+    max-height: 300px;
+  }
+
+  .gallery-card__image-wrap {
+    padding: 1rem;
+  }
+
+  .gallery-card__title {
+    font-size: 1rem;
+  }
+
+  .gallery-card__native {
+    font-size: 0.95rem;
+  }
+
+  .gallery-card__medium {
+    font-size: 0.8rem;
+  }
+
+  .gallery-card__meta {
+    font-size: 0.75rem;
+  }
+
+  /* Gallery list on phone */
+  .gallery-list-item {
+    gap: 0.75rem;
+    padding: 0.85rem 0.25rem;
+  }
+
+  .gallery-list-item__thumb-wrap {
+    width: 50px;
+    height: 50px;
+  }
+
+  .gallery-list-item__title {
+    font-size: 1rem;
+  }
+
+  .gallery-list-item__native {
+    font-size: 0.9rem;
+  }
+
+  .gallery-list-item__medium {
+    font-size: 0.75rem;
+  }
+}
+

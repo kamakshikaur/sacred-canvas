@@ -158,6 +158,7 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
       if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
       if (duckingTimeoutRef.current) clearTimeout(duckingTimeoutRef.current);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Handle Global Mute Toggling
@@ -181,6 +182,7 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
         // We will just let the user click play again. Or we can auto-continue it.
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMuted]);
 
   // Handle ducking reactively based on Voiceover Playing state
