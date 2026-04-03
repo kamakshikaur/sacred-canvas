@@ -280,9 +280,15 @@
 
 /* ── Portfolio Section ── */
 .works-portfolio {
-  padding: 10rem 2rem;
+  padding: 6rem 1.5rem;
   text-align: center;
   position: relative;
+}
+
+@media (min-width: 768px) {
+  .works-portfolio {
+    padding: 10rem 2rem;
+  }
 }
 
 .works-portfolio__ornament {
@@ -416,7 +422,8 @@
 
 @media (max-width: 860px) {
   .works-rooms {
-    gap: 8rem;
+    gap: 6vh;
+    padding: 2vh 0 6vh;
   }
 
   .works-room {

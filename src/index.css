@@ -65,6 +65,28 @@
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Disable global text selection */
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+  }
+
+  /* Prevent printing/PDF-saving of art content */
+  @media print {
+    body * {
+      display: none !important;
+    }
+    body::after {
+      content: "Protected Content: For inquiries or portfolio access, please visit kamakshikaur.art or contact the artist directly.";
+      display: block;
+      font-family: serif;
+      font-size: 1.5rem;
+      text-align: center;
+      padding: 5rem 2rem;
+      color: #000;
+      background: #fff;
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {

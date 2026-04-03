@@ -15,8 +15,7 @@ const Gallery = () => {
   const lightboxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.title = "Gallery — Kamakshi Kaur";
-    return () => { document.title = "Kamakshi Kaur"; };
+    document.title = "Kamakshi Kaur";
   }, []);
 
   // Close lightbox on Escape

@@ -31,11 +31,12 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
   const ambientAudioRef = useRef<HTMLAudioElement | null>(null);
   const voiceoverAudioRef = useRef<HTMLAudioElement | null>(null);
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const duckingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const animationFrameRef = useRef<number>();
 
   // --- AMBIENT VOLUME CONSTANTS ---
   const NORMAL_VOL = 0.08; 
-  const DUCKED_VOL = 0.01;
+  const DUCKED_VOL = 0.02; // Slightly higher for better balance
   const FADE_STEP = 0.005;
 
   // Track time
@@ -116,6 +117,7 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
       ambientAudioRef.current?.pause();
       voiceoverAudioRef.current?.pause();
       if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+      if (duckingTimeoutRef.current) clearTimeout(duckingTimeoutRef.current);
     };
   }, []);
 
@@ -145,10 +147,20 @@ export const SoundProvider = ({ children }: { children: React.ReactNode }) => {
   // Handle ducking reactively based on Voiceover Playing state
   useEffect(() => {
     if (isVoiceoverPlaying && !isMuted) {
+      if (duckingTimeoutRef.current) clearTimeout(duckingTimeoutRef.current);
       fadeAmbientTo(DUCKED_VOL);
     } else if (!isVoiceoverPlaying && !isMuted) {
-      fadeAmbientTo(NORMAL_VOL);
+      // Add a small delay for unducking to prevent volume "bounce" during navigation
+      // or between consecutive voiceovers that might trigger stop/start cycles.
+      if (duckingTimeoutRef.current) clearTimeout(duckingTimeoutRef.current);
+      duckingTimeoutRef.current = setTimeout(() => {
+        fadeAmbientTo(NORMAL_VOL);
+      }, 400); // 400ms is enough to bridge the navigation gap
     }
+    
+    return () => {
+      if (duckingTimeoutRef.current) clearTimeout(duckingTimeoutRef.current);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isVoiceoverPlaying, isMuted]);
 

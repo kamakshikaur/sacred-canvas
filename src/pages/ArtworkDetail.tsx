@@ -31,11 +31,8 @@ const ArtworkDetail = () => {
   const overlayOpacity = useTransform(heroProgress, [0, 0.5, 1], [0.15, 0.4, 0.8]);
 
   useEffect(() => {
-    if (artwork) {
-      document.title = `${artwork.title.replace(/\u200B/g, "")} — Kamakshi Kaur`;
-    }
-    return () => { document.title = "Kamakshi Kaur"; };
-  }, [artwork]);
+    document.title = "Kamakshi Kaur";
+  }, []);
 
   const { playVoiceover, stopVoiceover } = useSound();
 

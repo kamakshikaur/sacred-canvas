@@ -11,7 +11,7 @@ import heroBg from "@/assets/hero-bg.png";
 import { artworks } from "@/data/artworks";
 
 const Index = () => {
-  useEffect(() => { document.title = "Kamakshi Kaur — Contemporary Artist | Oil & Gold Leaf Paintings"; return () => { document.title = "Kamakshi Kaur"; }; }, []);
+  useEffect(() => { document.title = "Kamakshi Kaur"; }, []);
   const featured = [
     artworks.find(w => w.id === "fractions-of-soul") || artworks[0],
     artworks.find(w => w.id === "sunn") || artworks[1],
@@ -80,7 +80,7 @@ const Index = () => {
               initial={{ letterSpacing: "0.05em", filter: "blur(15px)", opacity: 0, scale: 0.95 }}
               animate={{ letterSpacing: "0.2em", filter: "blur(0px)", opacity: 0.95, scale: 1 }}
               transition={{ duration: 3, ease: [0.25, 0.1, 0.25, 1], delay: 0.2 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-heading text-secondary drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] uppercase"
+              className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-heading text-secondary drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] uppercase"
               style={{ textShadow: "0px 0px 40px rgba(255,160,100,0.6)" }}
             >
               Step Inside
@@ -106,7 +106,7 @@ const Index = () => {
       </div>
 
       {/* Artist quote — overlaps upward with seamless glass effect */}
-      <section className="relative -mt-24 pt-44 pb-32 md:pb-40 px-8 z-10 w-full">
+      <section className="relative -mt-20 pt-32 md:pt-44 pb-20 md:pb-40 px-6 md:px-8 z-10 w-full">
         {/* Soft fading glass background */}
         <div 
           className="absolute inset-0 backdrop-blur-2xl bg-black/30 pointer-events-none -z-10"
@@ -137,7 +137,7 @@ const Index = () => {
       </section>
 
       {/* Featured works */}
-      <section className="px-8 md:px-16 py-32">
+      <section className="px-6 md:px-16 py-16 md:py-32">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-6 items-center">
           {featured.map((work, i) => {
             const layouts = [
@@ -181,7 +181,7 @@ const Index = () => {
       </section>
 
       {/* Emotional CTA */}
-      <section className="py-32 md:py-40 px-8">
+      <section className="py-20 md:py-40 px-6 md:px-8">
         <div className="max-w-2xl mx-auto text-center">
           <FadeInView>
             <div className="w-12 h-px bg-primary/40 mx-auto mb-16" />

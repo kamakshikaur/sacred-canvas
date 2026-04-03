@@ -11,8 +11,7 @@ import portfolioCover from "@/assets/portfolio-cover.png";
 
 const Works = () => {
   useEffect(() => {
-    document.title = "Works — Kamakshi Kaur";
-    return () => { document.title = "Kamakshi Kaur"; };
+    document.title = "Kamakshi Kaur";
   }, []);
 
   return (

@@ -6,7 +6,7 @@ import ProtectedImage from "@/components/ProtectedImage";
 import artistPortrait from "@/assets/artist-portrait.png";
 
 const About = () => {
-  useEffect(() => { document.title = "About — Kamakshi Kaur"; return () => { document.title = "Kamakshi Kaur"; }; }, []);
+  useEffect(() => { document.title = "Kamakshi Kaur"; }, []);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -18,7 +18,7 @@ const About = () => {
 
   return (
     <PageTransition>
-      <div className="pt-32 md:pt-40 pb-24 px-8 md:px-16" ref={containerRef}>
+      <div className="pt-24 md:pt-40 pb-16 md:pb-24 px-6 md:px-16" ref={containerRef}>
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start relative">
           {/* Portrait with parallax — Sticky on desktop */}
           <div className="order-2 md:order-1 md:sticky top-8 md:top-32 lg:top-40">
@@ -41,19 +41,19 @@ const About = () => {
           {/* Text */}
           <div className="order-1 md:order-2">
             <FadeInView>
-              <h1 className="font-heading text-4xl md:text-5xl tracking-[0.05em] text-foreground mb-12">
+              <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl tracking-[0.05em] text-foreground mb-10 md:mb-12">
                 About
               </h1>
             </FadeInView>
 
             <FadeInView delay={0.2}>
-              <p className="font-body text-xl leading-relaxed text-foreground/80 italic mb-10">
+              <p className="font-body text-lg md:text-xl leading-relaxed text-foreground/80 italic mb-8 md:mb-10">
                 I am creation, and creation is where I return to myself, to bliss.
               </p>
             </FadeInView>
 
             <FadeInView delay={0.35}>
-              <p className="font-body text-lg leading-relaxed text-foreground/60 mb-4">
+              <p className="font-body text-base md:text-lg leading-relaxed text-foreground/60 mb-4">
                 My work begins in stillness, in moments where I turn inward and allow instinct to take the lead. It is less about making something seen, and more about responding to something felt, something that asks to take form without being fully understood.
               </p>
               <p className="font-body text-lg leading-relaxed text-foreground/60 mb-8">
