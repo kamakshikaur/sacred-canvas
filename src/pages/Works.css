@@ -217,8 +217,10 @@
 }
 
 .works-room__native {
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
-  color: hsl(43 45% 90% / 0.4);
+  font-family: 'Noto Sans Gurmukhi', sans-serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  color: #f8dfb2;
+  opacity: 0.4;
   font-weight: 300;
   margin-top: 0.2rem;
 }

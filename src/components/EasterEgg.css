@@ -1,0 +1,91 @@
+/* ═══════════════════════════════════════════════════
+   EASTER EGG — Divine Moment (Ek Onkar)
+   ═══════════════════════════════════════════════════ */
+
+.ee-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0);
+  transition: background 1.5s ease;
+  backdrop-filter: blur(0px) brightness(1);
+}
+
+.ee-overlay--visible {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px) brightness(0.6);
+}
+
+.ee-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center;
+}
+
+.ee-symbol {
+  font-family: 'Noto Sans Gurmukhi', sans-serif;
+  font-size: clamp(8rem, 15vw, 12rem);
+  font-weight: 300;
+  color: #ffffff;
+  line-height: 1;
+  user-select: none;
+  
+  /* Luminous divine glow */
+  text-shadow: 
+    0 0 20px rgba(255, 255, 255, 0.8),
+    0 0 40px rgba(255, 255, 255, 0.4),
+    0 0 80px rgba(255, 255, 255, 0.2);
+    
+  /* Subtle drop shadow for depth */
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+  position: relative;
+  z-index: 2;
+}
+
+/* Breathing Aura layer */
+.ee-aura {
+  position: absolute;
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 1;
+  animation: aura-breathe 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes aura-breathe {
+  0%, 100% { transform: scale(0.9); opacity: 0.3; }
+  50% { transform: scale(1.1); opacity: 0.6; }
+}
+
+/* Energy Ripple / Shimmer */
+.ee-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 60%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  z-index: 3;
+  animation: shimmer-ripple 3s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes shimmer-ripple {
+  0% { background-position: -200% -200%; opacity: 0; }
+  20% { opacity: 1; }
+  100% { background-position: 200% 200%; opacity: 0; }
+}

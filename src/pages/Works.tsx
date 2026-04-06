@@ -10,16 +10,20 @@ import { artworks } from "@/data/artworks";
 import portfolioCover from "@/assets/portfolio-cover.png";
 import { useUI } from "@/context/UIContext";
 
-const Works = () => {
-  useEffect(() => {
-    document.title = "Kamakshi Kaur";
-  }, []);
+import { Helmet } from "react-helmet-async";
 
+const Works = () => {
   const { toggleGallery } = useUI();
   const { scrollYProgress } = useScroll();
 
   return (
     <PageTransition>
+      <Helmet>
+        <title>Portfolio | Works of Kamakshi Kaur</title>
+        <meta name="description" content="Explore the diverse collection of mixed media artworks by Kamakshi Kaur. Each piece is a unique dialogue between material, emotion, and spirit." />
+        <meta property="og:title" content="Works | Kamakshi Kaur" />
+        <meta property="og:description" content="Experience the multimedia journey of Kamakshi Kaur's latest artworks." />
+      </Helmet>
       {/* ═══ PAGE PROGRESS BAR ═══ */}
       <div className="hidden md:flex fixed bottom-0 left-0 right-0 h-16 items-end z-[90] pointer-events-none backdrop-blur-md bg-gradient-to-t from-background/50 to-transparent" style={{ WebkitMaskImage: 'linear-gradient(to right, black, transparent 95%)' }}>
         <m.div

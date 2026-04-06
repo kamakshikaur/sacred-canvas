@@ -4,9 +4,21 @@ import PageTransition from "@/components/PageTransition";
 import FadeInView from "@/components/FadeInView";
 import ProtectedImage from "@/components/ProtectedImage";
 import artistPortrait from "@/assets/artist-portrait.png";
+import { Helmet } from "react-helmet-async";
 
 const About = () => {
-  useEffect(() => { document.title = "Kamakshi Kaur"; }, []);
+  const artistSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Kamakshi Kaur",
+    "url": "https://kamakshikaur.com",
+    "image": "https://kamakshikaur.com/artist-portrait.png",
+    "jobTitle": "Contemporary Artist",
+    "description": "Kamakshi Kaur is a contemporary artist focused on mixed media and sacred art, exploring the relationship between being seen and seeing oneself.",
+    "knowsAbout": ["Contemporary Art", "Mixed Media", "Sacred Art", "Jewellery Design"]
+  };
+
+  useEffect(() => { document.title = "About | Kamakshi Kaur"; }, []);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -18,6 +30,13 @@ const About = () => {
 
   return (
     <PageTransition>
+      <Helmet>
+        <title>About | Kamakshi Kaur</title>
+        <meta name="description" content="Learn about Kamakshi Kaur, a contemporary artist exploring the intersection of identity, memory, and the sacred through mixed media." />
+        <script type="application/ld+json">
+          {JSON.stringify(artistSchema)}
+        </script>
+      </Helmet>
       <div className="pt-20 md:pt-40 pb-12 md:pb-24 px-5 sm:px-6 md:px-16" ref={containerRef}>
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-24 items-start relative">
           {/* Portrait with parallax — Sticky on desktop */}

@@ -19,6 +19,7 @@ import ArtworkDetail from "./pages/ArtworkDetail";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import EasterEgg from "@/components/EasterEgg";
 
 import { useEffect } from "react";
 
@@ -75,7 +76,8 @@ const App = () => {
                 <VoiceoverPlayer />
                 <Navigation />
                 <GalleryOverlay />
-                <div className="pb-16">
+                <EasterEgg />
+                <main className="pb-16">
                   <Routes>
                     <Route path="/" element={<Index />} />
                     <Route path="/works" element={<Works />} />
@@ -84,7 +86,7 @@ const App = () => {
                     <Route path="/contact" element={<Contact />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
-                </div>
+                </main>
               </BrowserRouter>
             </TooltipProvider>
           </UIProvider>

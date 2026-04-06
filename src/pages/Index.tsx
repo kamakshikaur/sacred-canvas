@@ -9,8 +9,9 @@ import heroEye from "@/assets/hero-eye-new.png";
 import heroBg from "@/assets/hero-bg.png";
 import { artworks } from "@/data/artworks";
 
+import { Helmet } from "react-helmet-async";
+
 const Index = () => {
-  useEffect(() => { document.title = "Kamakshi Kaur"; }, []);
   const featured = [
     artworks.find(w => w.id === "fractions-of-soul") || artworks[0],
     artworks.find(w => w.id === "sunn") || artworks[1],
@@ -35,6 +36,13 @@ const Index = () => {
 
   return (
     <PageTransition>
+      <Helmet>
+        <title>Kamakshi Kaur | Artist Portfolio</title>
+        <meta name="description" content="Discover the immersive, multimedia art world of Kamakshi Kaur. An exploration of the soul through mixed media, tradition, and digital experience." />
+        <meta property="og:title" content="Kamakshi Kaur | Artist Portfolio" />
+        <meta property="og:description" content="An immersive digital journey through the art of Kamakshi Kaur." />
+      </Helmet>
+
       {/* Eye-zoom hero */}
       <div ref={heroRef} className="relative h-[200vh] md:h-[350vh]">
         <div className="sticky top-0 h-screen overflow-hidden bg-[#0a0202]">

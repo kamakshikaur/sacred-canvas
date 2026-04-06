@@ -1,14 +1,30 @@
-User-agent: Googlebot
+# AI-Friendly Robots.txt for Kamakshi Kaur Portfolio
+# Allowing major AI crawlers to index the artistic content for better discovery and understanding.
+
+User-agent: GPTBot
 Allow: /
 
-User-agent: Bingbot
+User-agent: ChatGPT-User
 Allow: /
 
-User-agent: Twitterbot
+User-agent: CCBot
 Allow: /
 
-User-agent: facebookexternalhit
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ImagesiftBot
 Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+Sitemap: https://kamakshikaur.com/sitemap.xml

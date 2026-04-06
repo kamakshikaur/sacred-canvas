@@ -143,8 +143,10 @@
 }
 
 .ad-hero__native {
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  color: hsl(43 45% 90% / 0.35);
+  font-family: 'Noto Sans Gurmukhi', sans-serif;
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  color: #f8dfb2;
+  opacity: 0.4;
   font-weight: 300;
 }
 
@@ -250,8 +252,10 @@
 
 .ad-details__native {
   display: block;
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  color: hsl(43 45% 90% / 0.4);
+  font-family: 'Noto Sans Gurmukhi', sans-serif;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  color: #f8dfb2;
+  opacity: 0.4;
   font-weight: 300;
   margin-top: 0.3rem;
 }
@@ -294,9 +298,9 @@
 /* Metadata grid */
 .ad-details__meta-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  grid-template-columns: auto 1fr;
+  gap: 3rem;
+  margin-bottom: 2.5rem;
   padding: 1.5rem 0;
   border-top: 1px solid hsl(0 0% 100% / 0.04);
   border-bottom: 1px solid hsl(0 0% 100% / 0.04);
@@ -310,17 +314,18 @@
 
 .ad-details__meta-label {
   font-family: var(--font-heading);
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: hsl(38 100% 84% / 0.5);
+  color: hsl(38 100% 84% / 0.4);
+  margin-bottom: 0.2rem;
 }
 
 .ad-details__meta-value {
   font-family: var(--font-body);
   font-size: 1.05rem;
-  color: hsl(43 45% 90% / 0.75);
-  line-height: 1.4;
+  color: hsl(43 45% 90% / 0.85);
+  line-height: 1.5;
 }
 
 /* Quote / description */
@@ -600,8 +605,8 @@
     letter-spacing: 0.03em;
   }
 
-  .ad-details__native {
-    font-size: 1.5rem;
+  .works-room__native {
+    font-size: 1.15rem;
     margin-top: 0.2rem;
   }
 
